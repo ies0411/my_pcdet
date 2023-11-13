@@ -118,17 +118,7 @@ def main():
     tb_log = SummaryWriter(log_dir=str(output_dir / 'tensorboard')) if cfg.LOCAL_RANK == 0 else None
 
     logger.info("----------- Create dataloader & network & optimizer -----------")
-    train_set, train_loader, train_sampler = build_dataloader(
-        dataset_cfg=cfg.DATA_CONFIG,
-        class_names=cfg.CLASS_NAMES,
-        batch_size=args.batch_size,
-        dist=dist_train, workers=args.workers,
-        logger=logger,
-        training=True,
-        merge_all_iters_to_one_epoch=args.merge_all_iters_to_one_epoch,
-        total_epochs=args.epochs,
-        seed=666 if args.fix_random_seed else None
-    )
+
 
     if cfg.get('TYPE') == 'ALL':
         class_names = {
@@ -152,7 +142,6 @@ def main():
             training=True,
             merge_all_iters_to_one_epoch=args.merge_all_iters_to_one_epoch,
             total_epochs=args.epochs,
-            pin_memory=args.pin_memory,
             seed=666 if args.fix_random_seed else None,
         )
         model = build_network(

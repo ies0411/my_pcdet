@@ -5,6 +5,7 @@ from torch.utils.data import DistributedSampler as _DistributedSampler
 
 from pcdet.utils import common_utils
 
+from .all.all_dataset import AllinOneDataset
 from .dataset import DatasetTemplate
 from .kitti.kitti_dataset import KittiDataset
 from .nuscenes.nuscenes_dataset import NuScenesDataset
@@ -24,7 +25,9 @@ __all__ = {
     'LyftDataset': LyftDataset,
     'ONCEDataset': ONCEDataset,
     'CustomDataset': CustomDataset,
-    'Argo2Dataset': Argo2Dataset
+    'Argo2Dataset': Argo2Dataset,
+    'AllinOneDataset': AllinOneDataset,
+
 }
 
 
