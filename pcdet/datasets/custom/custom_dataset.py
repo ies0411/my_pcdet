@@ -1,6 +1,6 @@
 import copy
-import pickle
 import os
+import pickle
 
 import numpy as np
 
@@ -48,6 +48,9 @@ class CustomDataset(DatasetTemplate):
 
     def get_label(self, idx):
         label_file = self.root_path / 'labels' / ('%s.txt' % idx)
+        if label_file.exists() ==False:
+            print("-----------------------------------")
+            print(label_file)
         assert label_file.exists()
         with open(label_file, 'r') as f:
             lines = f.readlines()
@@ -115,8 +118,8 @@ class CustomDataset(DatasetTemplate):
             return 'No ground-truth boxes for evaluation', {}
 
         def kitti_eval(eval_det_annos, eval_gt_annos, map_name_to_kitti):
-            from ..kitti.kitti_object_eval_python import eval as kitti_eval
             from ..kitti import kitti_utils
+            from ..kitti.kitti_object_eval_python import eval as kitti_eval
 
             kitti_utils.transform_annotations_to_kitti_format(eval_det_annos, map_name_to_kitti=map_name_to_kitti)
             kitti_utils.transform_annotations_to_kitti_format(
@@ -269,15 +272,20 @@ if __name__ == '__main__':
     import sys
 
     if sys.argv.__len__() > 1 and sys.argv[1] == 'create_custom_infos':
-        import yaml
         from pathlib import Path
+
+        import yaml
         from easydict import EasyDict
 
         dataset_cfg = EasyDict(yaml.safe_load(open(sys.argv[2])))
-        ROOT_DIR = (Path(__file__).resolve().parent / '../../../').resolve()
+        # ROOT_DIR = (Path(__file__).resolve().parent / '../../../').resolve()
+        data_path = Path('/mnt/nas3/Data/a9/converted_test').resolve()
+
         create_custom_infos(
             dataset_cfg=dataset_cfg,
             class_names=['Vehicle', 'Pedestrian', 'Cyclist'],
-            data_path=ROOT_DIR / 'data' / 'custom',
-            save_path=ROOT_DIR / 'data' / 'custom',
+            # data_path=ROOT_DIR / 'data' / 'custom',
+            # save_path=ROOT_DIR / 'data' / 'custom',
+            data_path=data_path,
+            save_path=data_path
         )
