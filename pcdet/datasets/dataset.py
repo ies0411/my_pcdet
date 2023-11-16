@@ -45,7 +45,7 @@ class DatasetTemplate(torch_data.Dataset):
             self.depth_downsample_factor = self.data_processor.depth_downsample_factor
         else:
             self.depth_downsample_factor = None
-            
+
     @property
     def mode(self):
         return 'train' if self.training else 'test'
@@ -73,7 +73,7 @@ class DatasetTemplate(torch_data.Dataset):
         Returns:
 
         """
-        
+
         def get_template_prediction(num_samples):
             box_dim = 9 if self.dataset_cfg.get('TRAIN_WITH_SPEED', False) else 7
             ret_dict = {
@@ -179,7 +179,7 @@ class DatasetTemplate(torch_data.Dataset):
         if self.training:
             assert 'gt_boxes' in data_dict, 'gt_boxes should be provided for training'
             gt_boxes_mask = np.array([n in self.class_names for n in data_dict['gt_names']], dtype=np.bool_)
-            
+
             if 'calib' in data_dict:
                 calib = data_dict['calib']
             data_dict = self.data_augmentor.forward(
@@ -198,7 +198,6 @@ class DatasetTemplate(torch_data.Dataset):
             gt_classes = np.array([self.class_names.index(n) + 1 for n in data_dict['gt_names']], dtype=np.int32)
             gt_boxes = np.concatenate((data_dict['gt_boxes'], gt_classes.reshape(-1, 1).astype(np.float32)), axis=1)
             data_dict['gt_boxes'] = gt_boxes
-
             if data_dict.get('gt_boxes2d', None) is not None:
                 data_dict['gt_boxes2d'] = data_dict['gt_boxes2d'][selected]
 

@@ -1,0 +1,78 @@
+2023-11-16 05:48:41,801   INFO  Loading Waymo dataset
+2023-11-16 05:48:58,518   INFO  Total skipped info 0
+2023-11-16 05:48:58,522   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 05:49:53,727   INFO  Loading Waymo dataset
+2023-11-16 05:49:56,793   INFO  Total skipped info 0
+2023-11-16 05:49:56,795   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 05:52:22,863   INFO  Loading Waymo dataset
+2023-11-16 05:52:22,863   INFO  Loading Waymo dataset
+2023-11-16 05:52:26,030   INFO  Total skipped info 0
+2023-11-16 05:52:26,030   INFO  Total skipped info 0
+2023-11-16 05:52:26,036   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 05:52:26,036   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 05:54:17,559   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 05:54:17,559   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 05:54:17,689   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 05:54:17,689   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 05:54:17,714   INFO  ==> Done (loaded 391/391)
+2023-11-16 05:54:17,714   INFO  ==> Done (loaded 391/391)
+2023-11-16 06:18:34,076   INFO  Loading Waymo dataset
+2023-11-16 06:18:36,801   INFO  Total skipped info 0
+2023-11-16 06:18:36,804   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:19:22,846   INFO  Loading Waymo dataset
+2023-11-16 06:19:22,846   INFO  Loading Waymo dataset
+2023-11-16 06:19:25,394   INFO  Total skipped info 0
+2023-11-16 06:19:25,394   INFO  Total skipped info 0
+2023-11-16 06:19:25,397   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:19:25,397   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:19:49,435   INFO  Loading Waymo dataset
+2023-11-16 06:19:49,435   INFO  Loading Waymo dataset
+2023-11-16 06:19:49,435   INFO  Loading Waymo dataset
+2023-11-16 06:19:51,828   INFO  Total skipped info 0
+2023-11-16 06:19:51,828   INFO  Total skipped info 0
+2023-11-16 06:19:51,828   INFO  Total skipped info 0
+2023-11-16 06:19:51,830   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:19:51,830   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:19:51,830   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:20:06,500   INFO  Loading Waymo dataset
+2023-11-16 06:20:06,500   INFO  Loading Waymo dataset
+2023-11-16 06:20:06,500   INFO  Loading Waymo dataset
+2023-11-16 06:20:06,500   INFO  Loading Waymo dataset
+2023-11-16 06:20:09,541   INFO  Total skipped info 0
+2023-11-16 06:20:09,541   INFO  Total skipped info 0
+2023-11-16 06:20:09,541   INFO  Total skipped info 0
+2023-11-16 06:20:09,541   INFO  Total skipped info 0
+2023-11-16 06:20:09,547   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:20:09,547   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:20:09,547   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:20:09,547   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:20:17,027   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 06:20:17,027   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 06:20:17,027   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 06:20:17,027   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 06:20:18,857   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 06:20:18,857   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 06:20:18,857   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 06:20:18,857   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 06:20:18,894   INFO  ==> Done (loaded 391/391)
+2023-11-16 06:20:18,894   INFO  ==> Done (loaded 391/391)
+2023-11-16 06:20:18,894   INFO  ==> Done (loaded 391/391)
+2023-11-16 06:20:18,894   INFO  ==> Done (loaded 391/391)
+2023-11-16 06:21:57,154   INFO  Loading Waymo dataset
+2023-11-16 06:21:59,448   INFO  Total skipped info 0
+2023-11-16 06:21:59,449   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:22:01,252   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 06:22:01,354   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 06:22:01,377   INFO  ==> Done (loaded 391/391)
+2023-11-16 06:28:25,548   INFO  Loading Waymo dataset
+2023-11-16 06:28:28,402   INFO  Total skipped info 0
+2023-11-16 06:28:28,403   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:28:30,252   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 06:28:30,353   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 06:28:30,376   INFO  ==> Done (loaded 391/391)
+2023-11-16 06:28:58,020   INFO  Loading Waymo dataset
+2023-11-16 06:29:00,521   INFO  Total skipped info 0
+2023-11-16 06:29:00,523   INFO  Total samples for Waymo dataset: 39987
+2023-11-16 06:29:02,545   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/dsvt_pillar_waymo/ckpt/latest_model.pth to GPU
+2023-11-16 06:29:02,669   INFO  ==> Checkpoint trained from version: pcdet+0.6.0++py88d9ce2
+2023-11-16 06:29:02,692   INFO  ==> Done (loaded 391/391)

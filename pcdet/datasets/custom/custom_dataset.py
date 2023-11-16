@@ -279,11 +279,13 @@ if __name__ == '__main__':
 
         dataset_cfg = EasyDict(yaml.safe_load(open(sys.argv[2])))
         # ROOT_DIR = (Path(__file__).resolve().parent / '../../../').resolve()
-        data_path = Path('/mnt/nas3/Data/a9/converted_test').resolve()
+        data_path = Path('/mnt/nas3/Data/a9/convert_custom').resolve()
 
         create_custom_infos(
             dataset_cfg=dataset_cfg,
-            class_names=['Vehicle', 'Pedestrian', 'Cyclist'],
+            class_names= ['CAR', 'BUS', 'TRUCK', 'VAN', 'TRAILER','EMERGENCY_VEHICLE','BICYCLE','MOTORCYCLE','PEDESTRIAN','OTHER'],
+
+            # class_names=['Vehicle', 'Pedestrian', 'Cyclist'],
             # data_path=ROOT_DIR / 'data' / 'custom',
             # save_path=ROOT_DIR / 'data' / 'custom',
             data_path=data_path,
