@@ -127,9 +127,15 @@ class CustomDataset(DatasetTemplate):
                 info_with_fakelidar=self.dataset_cfg.get('INFO_WITH_FAKELIDAR', False)
             )
             kitti_class_names = [map_name_to_kitti[x] for x in class_names]
-            ap_result_str, ap_dict = kitti_eval.get_official_eval_result(
-                gt_annos=eval_gt_annos, dt_annos=eval_det_annos, current_classes=kitti_class_names
+            #
+            ap_result_str, ap_dict,rec = kitti_eval.get_custom_eval_result(
+                gt_annos=eval_gt_annos,
+                dt_annos=eval_det_annos,
+                current_classes=kitti_class_names,
             )
+            # ap_result_str, ap_dict = kitti_eval.get_official_eval_result(
+            #     gt_annos=eval_gt_annos, dt_annos=eval_det_annos, current_classes=kitti_class_names
+            # )
             return ap_result_str, ap_dict
 
         eval_det_annos = copy.deepcopy(det_annos)
