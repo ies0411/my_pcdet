@@ -1,0 +1,771 @@
+DATASET: 'AllinOneDataset'
+
+# KITTI:
+#     MAP_KITTI_TO_CLASS : {
+#       'Car': 'Car',
+#       'Pedestrian': 'Pedestrian',
+#       'Cyclist': 'Cyclist',
+#       'Bus': 'Bus',
+#       'Truck': 'Truck'
+#     }
+
+#     AUGMENT_RANDOMLY : True
+#     DATA_PATH: '/mnt/nas3/Data/kitti'
+#     POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+#     # POINT_CLOUD_RANGE: [0, -40, -3, 70.4, 40, 1]
+
+#     DATA_SPLIT: {
+#         'train': train,
+#         'test': val
+#     }
+#     INFO_PATH: {
+#         'train': [kitti_infos_train.pkl],
+#         'test': [kitti_infos_val.pkl],
+#     }
+#     GET_ITEM_LIST: ["points"]
+#     FOV_POINTS_ONLY: True
+#     DATA_AUGMENTOR:
+#         DISABLE_AUG_LIST: ['placeholder']
+#         MIX:
+#         # 'mix_up','cut_mix'
+#           NAME_LIST:  ['mix_up','cut_mix']
+#           COLLISION_DETECTION: True
+#           ALPHA: 2
+#           PROB: 0.3
+#         AUG_CONFIG_LIST:
+#             - NAME: random_beam_downsample
+#               BEAM: 32
+#               BEAM_PROB: 0.75
+
+#             - NAME: random_beam_upsample
+#               BEAM: 32
+#               BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+#               PHI_THRESHOLD: 0.03
+
+#             # - NAME: gt_sampling
+#             #   USE_ROAD_PLANE: False
+#             #   DB_INFO_PATH:
+#             #       - kitti_dbinfos_train.pkl
+#             #   PREPARE: {
+#             #     filter_by_min_points: ['Car:5', 'Pedestrian:5', 'Cyclist:5'],
+#             #     filter_by_difficulty: [-1],
+#             #   }
+
+#             #   SAMPLE_GROUPS: ['Car:20','Pedestrian:15', 'Cyclist:15']
+#             #   NUM_POINT_FEATURES: 4
+#             #   DATABASE_WITH_FAKELIDAR: False
+#             #   REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+#             #   LIMIT_WHOLE_SCENE: True
+
+#             - NAME: random_world_flip
+#               ALONG_AXIS_LIST: ['x', 'y']
+
+#             - NAME: random_world_rotation
+#               WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+#             - NAME: random_world_scaling
+#               WORLD_SCALE_RANGE: [0.95, 1.05]
+
+#     POINT_FEATURE_ENCODING: {
+#         encoding_type: absolute_coordinates_encoding,
+#         used_feature_list: ['x', 'y', 'z', 'intensity'],
+#         src_feature_list: ['x', 'y', 'z', 'intensity'],
+#     }
+
+#     DATA_PROCESSOR:
+#         - NAME: mask_points_and_boxes_outside_range
+#           REMOVE_OUTSIDE_BOXES: True
+
+#         - NAME: shuffle_points
+#           SHUFFLE_ENABLED: {
+#             'train': True,
+#             'test': False
+#           }
+
+#         - NAME: transform_points_to_voxels
+#           VOXEL_SIZE: [0.1, 0.1, 0.15]
+#           MAX_POINTS_PER_VOXEL: 5
+#           MAX_NUMBER_OF_VOXELS: {
+#             'train': 150000,
+#             'test': 150000
+          # }
+# WAYMO:
+#     MAP_WAYMO_TO_CLASS : {
+#       'Vehicle': 'Car',
+#       'Pedestrian': 'Pedestrian',
+#       'Cyclist': 'Cyclist',
+#       'Sign' : 'Sign',
+#       'Bus': 'Bus',
+#       'Truck': 'Truck'
+#     }
+#     # ['Car', 'Truck','Bus','Motorcycle','bicycle','Pedestrian','Cyclist','Traffic_cone','Stroller','Wheelchair','Sign']
+#     AUGMENT_RANDOMLY : True
+#     DATA_PATH: '/mnt/nas3/Data/waymo'
+#     PROCESSED_DATA_TAG: 'waymo_processed_data_v0_5_0'
+
+#     POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+
+#     DATA_SPLIT: {
+#         'train': train,
+#         'test': val
+#     }
+
+#     SAMPLED_INTERVAL: {
+#         'train': 5,
+#         'test': 1
+#     }
+
+#     FILTER_EMPTY_BOXES_FOR_TRAIN: True
+#     DISABLE_NLZ_FLAG_ON_POINTS: True
+
+#     USE_SHARED_MEMORY: False  # it will load the data to shared memory to speed up (DO NOT USE IT IF YOU DO NOT FULLY UNDERSTAND WHAT WILL HAPPEN)
+#     SHARED_MEMORY_FILE_LIMIT: 35000  # set it based on the size of your shared memory
+
+#     DATA_AUGMENTOR:
+#         DISABLE_AUG_LIST: ['placeholder']
+#         MIX:
+#         # 'mix_up','cut_mix'
+#           NAME_LIST:  []
+#           COLLISION_DETECTION: True
+#           ALPHA: 2
+#           PROB: 0.3
+
+#         AUG_CONFIG_LIST:
+#             - NAME: random_beam_downsample
+#               BEAM: 32
+#               BEAM_PROB: 0.75
+
+#             - NAME: random_beam_upsample
+#               BEAM: 32
+#               BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+#               PHI_THRESHOLD: 0.03
+#             # - NAME: random_beam_downsample
+#             #   BEAM: 32
+#             #   BEAM_PROB: 0.75
+
+#             # - NAME: random_beam_upsample
+#             #   BEAM: 32
+#             #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+#             #   PHI_THRESHOLD: 0.03
+
+#             # - NAME: random_object_scaling
+#             #   SCALE_UNIFORM_NOISE: [ 0.95, 1.05 ]
+
+#             # - NAME: random_object_rotation
+#             #   ROT_PROB: 0.8
+#             #   ROT_UNIFORM_NOISE: [ -0.38539816, 0.38539816 ]
+
+
+#             # - NAME: gt_sampling
+#             #   USE_ROAD_PLANE: False
+#             #   DB_INFO_PATH:
+#             #       - waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1.pkl
+
+#             #   USE_SHARED_MEMORY: False  # set it to True to speed up (it costs about 15GB shared memory)
+#             #   DB_DATA_PATH:
+#             #       - waymo_processed_data_v0_5_0_gt_database_train_sampled_1_global.npy
+
+#             #   BACKUP_DB_INFO:
+#             #       # if the above DB_INFO cannot be found, will use this backup one
+#             #       DB_INFO_PATH: waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1_multiframe_-4_to_0.pkl
+#             #       DB_DATA_PATH: waymo_processed_data_v0_5_0_gt_database_train_sampled_1_multiframe_-4_to_0_global.npy
+#             #       NUM_POINT_FEATURES: 6
+
+#             #   PREPARE: {
+#             #     filter_by_min_points: ['Vehicle:5', 'Pedestrian:5', 'Cyclist:5'],
+#             #     filter_by_difficulty: [-1],
+#             #   }
+
+#             #   SAMPLE_GROUPS: ['Vehicle:15', 'Pedestrian:10', 'Cyclist:10']
+#             #   NUM_POINT_FEATURES: 5
+#             #   REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+#             #   LIMIT_WHOLE_SCENE: True
+
+#             - NAME: random_world_flip
+#               ALONG_AXIS_LIST: ['x', 'y']
+
+#             - NAME: random_world_rotation
+#               WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+#             - NAME: random_world_scaling
+#               WORLD_SCALE_RANGE: [0.95, 1.05]
+
+
+
+
+#     POINT_FEATURE_ENCODING: {
+#         encoding_type: absolute_coordinates_encoding,
+#         used_feature_list: ['x', 'y', 'z', 'intensity'],
+#         src_feature_list: ['x', 'y', 'z', 'intensity', 'elongation'],
+#     }
+
+
+#     DATA_PROCESSOR:
+#         - NAME: mask_points_and_boxes_outside_range
+#           REMOVE_OUTSIDE_BOXES: True
+
+#         - NAME: shuffle_points
+#           SHUFFLE_ENABLED: {
+#             'train': True,
+#             'test': True
+#           }
+
+#         - NAME: transform_points_to_voxels
+#           VOXEL_SIZE: [0.1, 0.1, 0.15]
+#           MAX_POINTS_PER_VOXEL: 5
+#           MAX_NUMBER_OF_VOXELS: {
+#             'train': 150000,
+#             'test': 150000
+#           }
+
+NUSCENES:
+    MAP_NUSCENES_TO_CLASS : {
+      # 'car': 'Car',
+      'truck' : 'Truck',
+      'bus' : 'Bus',
+      # 'pedestrian': 'Pedestrian',
+      # 'bicycle': 'Bicycle',
+      # 'traffic_cone' : 'Traffic_cone',
+      # 'motorcycle': 'Motorcycle'
+    }
+
+    # ['Car', 'Truck','Bus','Motorcycle','bicycle','Pedestrian','Cyclist','Traffic_cone','Stroller','Wheelchair','Sign']
+
+    AUGMENT_RANDOMLY : True
+
+    DATASET: 'NuScenesDataset'
+    DATA_PATH: '/mnt/nas3/Data/nuScenes/'
+
+    VERSION: 'v1.0-trainval'
+    # VERSION: 'v1.0-mini'
+
+    MAX_SWEEPS: 10
+    #https://github.com/open-mmlab/OpenPCDet/issues/639
+    #https://github.com/open-mmlab/OpenPCDet/issues/1084
+    PRED_VELOCITY: False
+
+    SET_NAN_VELOCITY_TO_ZEROS: True
+    FILTER_MIN_POINTS_IN_GT: 1
+
+    DATA_SPLIT: {
+        'train': train,
+        'test': val
+    }
+
+    INFO_PATH: {
+        'train': [nuscenes_infos_10sweeps_train.pkl],
+        'test': [nuscenes_infos_10sweeps_val.pkl],
+    }
+
+    POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+    # POINT_CLOUD_RANGE: [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
+
+    BALANCED_RESAMPLING: True
+
+    DATA_AUGMENTOR:
+        MIX:
+            NAME_LIST: []
+            COLLISION_DETECTION: True
+            ALPHA: 2
+            PROB: 0.3
+        DISABLE_AUG_LIST: ['placeholder']
+        AUG_CONFIG_LIST:
+            # - NAME: random_beam_downsample
+            #   BEAM: 32
+            #   BEAM_PROB: 0.75
+
+            - NAME: random_beam_upsample
+              BEAM: 32
+              BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+              PHI_THRESHOLD: 0.03
+            # - NAME: random_beam_upsample
+            #   BEAM: 32
+            #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            #   PHI_THRESHOLD: 0.03
+
+            - NAME: gt_sampling
+              DB_INFO_PATH:
+                  - nuscenes_dbinfos_10sweeps_withvelo.pkl
+              PREPARE: {
+                #  filter_by_min_points: [
+                #      'car:5','truck:5', 'construction_vehicle:5', 'bus:5', 'trailer:5',
+                #      'barrier:5', 'motorcycle:5', 'bicycle:5', 'pedestrian:5', 'traffic_cone:5'
+                #  ],
+                  filter_by_min_points: [
+                    'truck:5','bus:5'
+                 ],
+                # filter_by_min_points: ['car:5', 'pedestrian:5', 'cyclist:5'],
+
+              }
+              # SAMPLE_GROUPS: ['car:15', 'pedestrian:10', 'cyclist:10']
+
+              SAMPLE_GROUPS: [
+                  'truck:3',  'bus:4',
+              ]
+
+              NUM_POINT_FEATURES: 5
+              DATABASE_WITH_FAKELIDAR: False
+              REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+              LIMIT_WHOLE_SCENE: True
+
+            - NAME: random_world_flip
+              ALONG_AXIS_LIST: ['x', 'y']
+
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
+
+
+    POINT_FEATURE_ENCODING: {
+        encoding_type: absolute_coordinates_encoding,
+        used_feature_list: ['x', 'y', 'z', 'intensity'],
+        src_feature_list: ['x', 'y', 'z', 'intensity', 'timestamp'],
+    }
+
+
+    DATA_PROCESSOR:
+        - NAME: mask_points_and_boxes_outside_range
+          REMOVE_OUTSIDE_BOXES: True
+
+        - NAME: shuffle_points
+          SHUFFLE_ENABLED: {
+            'train': True,
+            'test': True
+          }
+
+        - NAME: transform_points_to_voxels
+          VOXEL_SIZE: [0.1, 0.1, 0.15]
+          MAX_POINTS_PER_VOXEL: 5
+          MAX_NUMBER_OF_VOXELS: {
+            'train': 150000,
+            'test': 150000
+          }
+# NIA:
+#     MAP_NIA_TO_CLASS : {
+#       'Vehicle': 'Car',
+#       'Truck':'Truck',
+#       'Human': 'Pedestrian',
+#       'Bus':'Bus',
+#       'bicycle': 'Bicycle',
+
+
+#     }
+
+
+#     # ['Car', 'Truck','Bus','Motorcycle','bicycle','Pedestrian','Cyclist','Traffic_cone','Stroller','Wheelchair','Sign']
+
+#     AUGMENT_RANDOMLY : True
+
+#     DATA_PATH: '/mnt/nas3/Data/PCD/indoor_parking_converted/full/custom'
+
+#     POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+
+
+#     MAP_CLASS_TO_KITTI: {
+#         'Vehicle': 'Vehicle',
+#         'Human': 'Human',
+#         'Wheelchair' : 'Wheelchair',
+#         'Stroller': 'Stroller',
+#         'Two_Wheeled_Vehicle':'Two_Wheeled_Vehicle',
+#         'Traffic_Cone': 'Traffic_Cone',
+#         'Shopping_Cart': 'Shopping_Cart',
+#         'Pillar': 'Pillar',
+#         'Tow_Wheeled_Vehicle':'Tow_Wheeled_Vehicle',
+#         'No_Parking_Sign':'No_Parking_Sign'
+#     }
+
+
+#     DATA_SPLIT: {
+#         'train': train,
+#         'test': val
+#     }
+
+#     INFO_PATH: {
+#         'train': [custom_infos_train.pkl],
+#         'test': [custom_infos_val.pkl],
+#     }
+
+#     POINT_FEATURE_ENCODING: {
+#         encoding_type: absolute_coordinates_encoding,
+#         used_feature_list: ['x', 'y', 'z', 'intensity'],
+#         src_feature_list: ['x', 'y', 'z', 'intensity'],
+#     }
+
+#     DATA_AUGMENTOR:
+#         MIX:
+#             NAME_LIST: ['mix_up','cut_mix']
+#             COLLISION_DETECTION: True
+#             ALPHA: 2
+#             PROB: 0.3
+#         DISABLE_AUG_LIST: ['placeholder']
+#         AUG_CONFIG_LIST:
+#             - NAME: random_beam_downsample
+#               BEAM: 32
+#               BEAM_PROB: 0.75
+
+#             # - NAME: random_beam_upsample
+#             #   BEAM: 32
+#             #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+#             #   PHI_THRESHOLD: 0.03
+
+#             # - NAME: gt_sampling
+#             #   USE_ROAD_PLANE: False
+#             #   DB_INFO_PATH:
+#             #       - custom_dbinfos_train.pkl
+#             #   PREPARE: {
+#             #     filter_by_min_points:  ['Human:5',  'Vehicle:5'],
+#             #   }
+
+#             #   SAMPLE_GROUPS: ['Human:5', 'Vehicle:15']
+
+#             #   NUM_POINT_FEATURES: 4
+#             #   DATABASE_WITH_FAKELIDAR: False
+#             #   REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+#             #   LIMIT_WHOLE_SCENE: True
+
+#             - NAME: random_world_flip
+#               ALONG_AXIS_LIST: ['x', 'y']
+
+#             - NAME: random_world_rotation
+#               WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+#             - NAME: random_world_scaling
+#               WORLD_SCALE_RANGE: [0.95, 1.05]
+
+#     DATA_PROCESSOR:
+#         - NAME: mask_points_and_boxes_outside_range
+#           REMOVE_OUTSIDE_BOXES: True
+
+#         - NAME: shuffle_points
+#           SHUFFLE_ENABLED: {
+#             'train': True,
+#             'test': False
+#           }
+
+#         - NAME: transform_points_to_voxels
+#           VOXEL_SIZE: [0.1, 0.1, 0.15]
+#           MAX_POINTS_PER_VOXEL: 5
+#           MAX_NUMBER_OF_VOXELS: {
+#             'train': 150000,
+#             'test': 150000
+#           }
+
+
+ARGO2:
+    MAP_ARGO2_TO_CLASS : {
+          # 'Regular_vehicle': 'Car',
+          # 'Pedestrian': 'Pedestrian',
+          # 'Bicycle': 'Bicycle',
+          'Truck' : 'Truck',
+          'Box_truck' : 'Truck',
+          # 'Truck_cab' : 'Truck',
+          'Bus' : 'Bus',
+          'School_bus' : 'Bus',
+          'Articulated_bus' : 'Bus',
+          # 'Motorcycle': 'Motorcycle',
+          # 'Bicyclist' : 'Cyclist',
+          # 'Stroller' : 'Stroller',
+          # 'Wheelchair' : 'Wheelchair',
+          # 'Sign' : 'Sign',
+          # 'Stop_sign' : 'Sign',
+          # 'Mobile_pedestrian_crossing_sign' :
+    }
+
+
+  # DATASET: 'Argo2Dataset'
+    DATA_PATH: '/mnt/nas3/Data/argo2'
+
+    POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+
+
+    DATA_SPLIT: {
+        'train': train,
+        'test': val
+    }
+
+    INFO_PATH: {
+        'train': [argo2_infos_train.pkl],
+        'test': [argo2_infos_val.pkl],
+    }
+
+    GET_ITEM_LIST: ["points"]
+    BALANCED_RESAMPLING: True
+
+    DATA_AUGMENTOR:
+        MIX:
+            NAME_LIST: ['mix_up','cut_mix']
+            COLLISION_DETECTION: True
+            ALPHA: 2
+            PROB: 0.3
+        DISABLE_AUG_LIST: ['placeholder']
+        AUG_CONFIG_LIST:
+            - NAME: random_beam_downsample
+              BEAM: 32
+              BEAM_PROB: 0.75
+
+            - NAME: random_beam_upsample
+              BEAM: 32
+              BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+              PHI_THRESHOLD: 0.03
+
+
+            - NAME: random_world_flip
+              ALONG_AXIS_LIST: ['x', 'y']
+
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
+
+
+    POINT_FEATURE_ENCODING: {
+        encoding_type: absolute_coordinates_encoding,
+        used_feature_list: ['x', 'y', 'z', 'intensity'],
+        src_feature_list: ['x', 'y', 'z', 'intensity'],
+    }
+
+
+    DATA_PROCESSOR:
+        - NAME: mask_points_and_boxes_outside_range
+          REMOVE_OUTSIDE_BOXES: True
+
+        - NAME: shuffle_points
+          SHUFFLE_ENABLED: {
+            'train': True,
+            'test': False
+          }
+
+
+        - NAME: transform_points_to_voxels
+          VOXEL_SIZE: [0.1, 0.1, 0.15]
+          MAX_POINTS_PER_VOXEL: 5
+          MAX_NUMBER_OF_VOXELS: {
+            'train': 150000,
+            'test': 150000
+          }
+
+
+
+
+
+ONCE:
+    MAP_ONCE_TO_CLASS : {
+      # 'Car': 'Car',
+      # 'Pedestrian': 'Pedestrian',
+      # 'Cyclist': 'Cyclist',
+      'Bus': 'Bus',
+      'Truck': 'Truck'
+    }
+    AUGMENT_RANDOMLY : True
+
+    DATA_PATH: '/mnt/nas3/Data/once'
+    # CLOUD_DATA_PATH: '/mnt/nas3/Data/once'
+
+    # POINT_CLOUD_RANGE: [-75.2, -75.2, -5.0, 75.2, 75.2, 3.0]
+    POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+
+    INFO_PATH: {
+        'train': [once_infos_train.pkl],
+        'val': [once_infos_val.pkl],
+        'test': [once_infos_test.pkl],
+    }
+
+    DATA_SPLIT: {
+        'train': train,
+        'test': val
+    }
+
+    BALANCED_RESAMPLING: True
+    PREPROCESSING_DATA:
+      APPLY: False
+      N_POINTS: 20
+      STD: 2.0
+
+    DATA_AUGMENTOR:
+        DISABLE_AUG_LIST: ['placeholder']
+        MIX:
+        # 'mix_up','cut_mix'
+          NAME_LIST: []
+          COLLISION_DETECTION: True
+          ALPHA: 2
+          PROB: 0.3
+
+        AUG_CONFIG_LIST:
+            - NAME: gt_sampling
+              USE_ROAD_PLANE: False
+              DB_INFO_PATH:
+                  - once_dbinfos_train.pkl
+              PREPARE: {
+                filter_by_min_points: [ 'Bus:5', 'Truck:5'],
+              }
+
+              SAMPLE_GROUPS: [ 'Bus:4', 'Truck:3']
+              NUM_POINT_FEATURES: 4
+              REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+              LIMIT_WHOLE_SCENE: True
+
+            - NAME: random_beam_downsample
+              BEAM: 32
+              BEAM_PROB: 0.75
+
+            # - NAME: random_beam_upsample
+            #   BEAM: 32
+            #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            #   PHI_THRESHOLD: 0.03
+
+
+            - NAME: random_world_flip
+              ALONG_AXIS_LIST: ['x', 'y']
+
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
+
+            # - NAME: random_local_pyramid_aug
+            #   DROP_PROB: 0.25
+            #   SPARSIFY_PROB: 0.05
+            #   SPARSIFY_MAX_NUM: 50
+            #   SWAP_PROB: 0.1
+            #   SWAP_MAX_NUM: 50
+
+            # - NAME: random_local_translation
+            #   LOCAL_TRANSLATION_RANGE: [0.95, 1.05]
+            #   ALONG_AXIS_LIST: ['x', 'y', 'z']
+
+            # - NAME: random_local_frustum_dropout
+            #   INTENSITY_RANGE: [ 0, 0.2 ]
+            #   DIRECTION: ['top']
+
+            # - NAME: random_local_rotation
+            #   LOCAL_ROT_ANGLE: [-0.15707963267, 0.15707963267]
+
+            # - NAME: random_local_scaling
+            #   LOCAL_SCALE_RANGE: [0.95, 1.05]
+
+
+    POINT_FEATURE_ENCODING: {
+        encoding_type: absolute_coordinates_encoding,
+        used_feature_list: ['x', 'y', 'z', 'intensity'],
+        src_feature_list: ['x', 'y', 'z', 'intensity'],
+    }
+
+
+    DATA_PROCESSOR:
+        - NAME: mask_points_and_boxes_outside_range
+          REMOVE_OUTSIDE_BOXES: True
+
+        - NAME: shuffle_points
+          SHUFFLE_ENABLED: {
+            'train': True,
+            'test': False
+          }
+
+        - NAME: transform_points_to_voxels
+          # VOXEL_SIZE: [0.1, 0.1, 0.2]
+          # MAX_POINTS_PER_VOXEL: 5
+          # MAX_NUMBER_OF_VOXELS: {
+          #   'train': 60000,
+          #   'test': 60000
+          # }
+          VOXEL_SIZE: [0.1, 0.1, 0.15]
+          MAX_POINTS_PER_VOXEL: 5
+          MAX_NUMBER_OF_VOXELS: {
+            'train': 150000,
+            'test': 150000
+          }
+
+
+LYFT:
+    MAP_LYFT_TO_CLASS : {
+      'bus':'Bus',
+      'truck':'Truck'
+    }
+    DATA_PATH: '/mnt/nas3/Data/lyft'
+
+
+    VERSION: 'trainval'
+    SET_NAN_VELOCITY_TO_ZEROS: True
+    FILTER_MIN_POINTS_IN_GT: 1
+    MAX_SWEEPS: 5
+    EVAL_LYFT_IOU_LIST: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+
+    DATA_SPLIT: {
+        'train': train,
+        'test': val
+    }
+
+    INFO_PATH: {
+        'train': [lyft_infos_train.pkl],
+        'test': [lyft_infos_val.pkl],
+    }
+
+    POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+    BALANCED_RESAMPLING: False
+    DATA_AUGMENTOR:
+        MIX:
+        #'mix_up','cut_mix'
+          NAME_LIST: []
+          COLLISION_DETECTION: True
+          ALPHA: 2
+          PROB: 0.3
+        DISABLE_AUG_LIST: ['placeholder']
+        AUG_CONFIG_LIST:
+            # - NAME: gt_sampling
+            #   DB_INFO_PATH:
+            #       - lyft_dbinfos_10sweeps.pkl
+            #   PREPARE: {
+            #     filter_by_min_points: [
+            #         'car:5','pedestrian:5', 'motorcycle:5', 'bicycle:5', 'other_vehicle:5',
+            #         'bus:5', 'truck:5', 'emergency_vehicle:5', 'animal:5'
+            #     ],
+            #   }
+
+            #   SAMPLE_GROUPS: [
+            #       'car:3','pedestrian:3', 'motorcycle:6', 'bicycle:6', 'other_vehicle:4',
+            #       'bus:4', 'truck:3', 'emergency_vehicle:7', 'animal:3'
+            #   ]
+
+            #   NUM_POINT_FEATURES: 5
+            #   DATABASE_WITH_FAKELIDAR: False
+            #   REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+            #   LIMIT_WHOLE_SCENE: True
+
+            - NAME: random_world_flip
+              ALONG_AXIS_LIST: ['x', 'y']
+
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.3925, 0.3925]
+
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
+
+
+    POINT_FEATURE_ENCODING: {
+        encoding_type: absolute_coordinates_encoding,
+        used_feature_list: ['x', 'y', 'z', 'intensity'],
+        src_feature_list: ['x', 'y', 'z', 'intensity', 'timestamp'],
+    }
+
+
+    DATA_PROCESSOR:
+        - NAME: mask_points_and_boxes_outside_range
+          REMOVE_OUTSIDE_BOXES: True
+
+        - NAME: shuffle_points
+          SHUFFLE_ENABLED: {
+            'train': True,
+            'test': True
+          }
+
+        - NAME: transform_points_to_voxels
+          VOXEL_SIZE: [0.1, 0.1, 0.15]
+          MAX_POINTS_PER_VOXEL: 5
+          MAX_NUMBER_OF_VOXELS: {
+            'train': 150000,
+            'test': 150000
+          }
