@@ -13,7 +13,6 @@ except:
 
 import numpy as np
 import torch
-
 from pcdet.config import cfg, cfg_from_yaml_file
 from pcdet.datasets import DatasetTemplate
 from pcdet.models import build_network, load_data_to_gpu
@@ -35,10 +34,20 @@ class DemoDataset(DatasetTemplate):
         )
         self.root_path = root_path
         self.ext = ext
-        data_file_list = glob.glob(str(root_path / f'*{self.ext}')) if self.root_path.is_dir() else [self.root_path]
+        data_file_list = glob.glob(str(root_path / f"*{self.ext}")) if self.root_path.is_dir() else [self.root_path]
 
         data_file_list.sort()
         self.sample_file_list = data_file_list
+    def converted_points_range(self, points):
+        point_cloud_range = self.dataset_cfg.POINT_CLOUD_RANGE
+
+        z_mean_pointcloud_range = (point_cloud_range[2]+point_cloud_range[5]) / 2.0 - 2.0
+        z_mean = np.median(points[:, 2])
+        offset_z = int(z_mean_pointcloud_range - z_mean)
+        print(offset_z)
+        # points[:,2] += offset_z
+
+
 
     def __len__(self):
         return len(self.sample_file_list)
@@ -50,11 +59,12 @@ class DemoDataset(DatasetTemplate):
             points = np.load(self.sample_file_list[index])
         else:
             raise NotImplementedError
-
+        self.converted_points_range(points)
         input_dict = {
             'points': points,
             'frame_id': index,
         }
+
 
         data_dict = self.prepare_data(data_dict=input_dict)
         return data_dict
@@ -67,7 +77,7 @@ def parse_config():
     parser.add_argument('--data_path', type=str, default='demo_data',
                         help='specify the point cloud data file or directory')
     parser.add_argument('--ckpt', type=str, default=None, help='specify the pretrained model')
-    parser.add_argument('--ext', type=str, default='.bin', help='specify the extension of your point cloud data file')
+    parser.add_argument('--ext', type=str, default='.npy', help='specify the extension of your point cloud data file')
 
     args = parser.parse_args()
 
@@ -90,20 +100,21 @@ def main():
     model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=True)
     model.cuda()
     model.eval()
+    #TODO : fine-tune or not
     with torch.no_grad():
         for idx, data_dict in enumerate(demo_dataset):
             logger.info(f'Visualized sample index: \t{idx + 1}')
             data_dict = demo_dataset.collate_batch([data_dict])
             load_data_to_gpu(data_dict)
             pred_dicts, _ = model.forward(data_dict)
+            # print(pred_dicts)
+            # V.draw_scenes(
+            #     points=data_dict['points'][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
+            #     ref_scores=pred_dicts[0]['pred_scores'], ref_labels=pred_dicts[0]['pred_labels']
+            # )
 
-            V.draw_scenes(
-                points=data_dict['points'][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
-                ref_scores=pred_dicts[0]['pred_scores'], ref_labels=pred_dicts[0]['pred_labels']
-            )
-
-            if not OPEN3D_FLAG:
-                mlab.show(stop=True)
+            # if not OPEN3D_FLAG:
+            #     mlab.show(stop=True)
 
     logger.info('Demo done.')
 
