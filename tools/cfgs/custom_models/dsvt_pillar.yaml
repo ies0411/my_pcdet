@@ -2,7 +2,8 @@ CLASS_NAMES: ['CAR', 'BUS', 'TRUCK', 'VAN', 'TRAILER','EMERGENCY_VEHICLE','BICYC
 # CLASS_NAMES: ['TRAILER', 'CAR', 'PEDESTRIAN', 'VAN']
 
 DATA_CONFIG:
-    _BASE_CONFIG_: cfgs/dataset_configs/custom_dataset_dsvt.yaml
+    # _BASE_CONFIG_: cfgs/dataset_configs/custom_dataset_dsvt.yaml
+    _BASE_CONFIG_: /home/eslim/workspace/OpenPCDet/tools/cfgs/dataset_configs/custom_dataset_dsvt.yaml
 
 MODEL:
     NAME: CenterPoint
