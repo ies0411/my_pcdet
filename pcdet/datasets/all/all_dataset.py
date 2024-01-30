@@ -13,10 +13,11 @@ from ..custom.custom_dataset import CustomDataset
 from ..dataset import DatasetTemplate
 from ..kitti import kitti_utils
 from ..kitti.kitti_dataset import KittiDataset
-from ..nuscenes.nuscenes_dataset import NuScenesDataset
-from ..waymo.waymo_dataset import WaymoDataset
-from ..once.once_dataset import ONCEDataset
 from ..lyft.lyft_dataset import LyftDataset
+from ..nuscenes.nuscenes_dataset import NuScenesDataset
+from ..once.once_dataset import ONCEDataset
+from ..waymo.waymo_dataset import WaymoDataset
+
 
 class AllinOneDataset(DatasetTemplate):
     def __init__(

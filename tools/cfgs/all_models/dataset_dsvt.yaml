@@ -146,6 +146,7 @@ WAYMO:
 
 NUSCENES:
     MAP_NUSCENES_TO_CLASS : {
+      # 'bus': 'Car',
       'car': 'Car',
       'pedestrian': 'Pedestrian',
       'cyclist': 'Cyclist'
