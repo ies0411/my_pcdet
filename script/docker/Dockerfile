@@ -18,11 +18,12 @@ RUN pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url h
 
 ENV TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX;Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta;Turing;8.6"
 
-RUN pip install --user numpy==1.23.0 llvmlite numba opencv-python tensorboardX easydict pyyaml scikit-image tqdm SharedArray spconv-cu118 pyquaternion kornia==0.6.8 nuscenes-devkit==1.0.5 open3d mayavi av2 torch-scatter
+RUN pip install --user numpy==1.23.0 llvmlite numba opencv-python tensorboardX easydict pyyaml scikit-image tqdm SharedArray spconv-cu118 pyquaternion kornia==0.6.8 nuscenes-devkit==1.0.5 open3d
+# mayavi av2
 
 RUN python3 -m pip install --user jupyter
 ENV DET=/opt/dec
 RUN git clone https://github.com/open-mmlab/OpenPCDet.git /opt/dec
 RUN python3 -m pip install --user -e /opt/dec
 RUN pip install --user torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
-
+RUN pip install --user mayavi av2

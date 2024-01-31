@@ -16,25 +16,30 @@ from .voxelnext import VoxelNeXt
 from .transfusion import TransFusion
 from .bevfusion import BevFusion
 
+# from .unitr import UniTR
+# from .unitr_map import UniTRMAP
+
 __all__ = {
-    'Detector3DTemplate': Detector3DTemplate,
-    'SECONDNet': SECONDNet,
-    'PartA2Net': PartA2Net,
-    'PVRCNN': PVRCNN,
-    'PointPillar': PointPillar,
-    'PointRCNN': PointRCNN,
-    'SECONDNetIoU': SECONDNetIoU,
-    'CaDDN': CaDDN,
-    'VoxelRCNN': VoxelRCNN,
-    'CenterPoint': CenterPoint,
-    'PillarNet': PillarNet,
-    'PVRCNNPlusPlus': PVRCNNPlusPlus,
-    'MPPNet': MPPNet,
-    'MPPNetE2E': MPPNetE2E,
-    'PillarNet': PillarNet,
-    'VoxelNeXt': VoxelNeXt,
-    'TransFusion': TransFusion,
-    'BevFusion': BevFusion,
+    "Detector3DTemplate": Detector3DTemplate,
+    "SECONDNet": SECONDNet,
+    "PartA2Net": PartA2Net,
+    "PVRCNN": PVRCNN,
+    "PointPillar": PointPillar,
+    "PointRCNN": PointRCNN,
+    "SECONDNetIoU": SECONDNetIoU,
+    "CaDDN": CaDDN,
+    "VoxelRCNN": VoxelRCNN,
+    "CenterPoint": CenterPoint,
+    "PillarNet": PillarNet,
+    "PVRCNNPlusPlus": PVRCNNPlusPlus,
+    "MPPNet": MPPNet,
+    "MPPNetE2E": MPPNetE2E,
+    "PillarNet": PillarNet,
+    "VoxelNeXt": VoxelNeXt,
+    "TransFusion": TransFusion,
+    "BevFusion": BevFusion,
+    # "UniTR": UniTR,
+    # "UniTRMAP": UniTRMAP,
 }
 
 
