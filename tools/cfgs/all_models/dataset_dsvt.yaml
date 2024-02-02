@@ -71,7 +71,7 @@ KITTI:
           }
 
         - NAME: transform_points_to_voxels_placeholder
-          VOXEL_SIZE: [ 0.32, 0.32, 6]
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]
 
 WAYMO:
     MAP_WAYMO_TO_CLASS : {
@@ -142,8 +142,7 @@ WAYMO:
           }
 
         - NAME: transform_points_to_voxels_placeholder
-          VOXEL_SIZE: [ 0.32, 0.32, 6]
-
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]
 NUSCENES:
     MAP_NUSCENES_TO_CLASS : {
       # 'bus': 'Car',
@@ -214,7 +213,7 @@ NUSCENES:
           }
 
         - NAME: transform_points_to_voxels_placeholder
-          VOXEL_SIZE: [ 0.32, 0.32, 6]
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]
 
 NIA:
     MAP_NIA_TO_CLASS : {
@@ -282,7 +281,7 @@ NIA:
           }
 
         - NAME: transform_points_to_voxels_placeholder
-          VOXEL_SIZE: [ 0.32, 0.32, 6]
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]
 
 
 ARGO2:
@@ -346,7 +345,7 @@ ARGO2:
 
 
         - NAME: transform_points_to_voxels_placeholder
-          VOXEL_SIZE: [ 0.32, 0.32, 6]
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]
 
 
 
@@ -412,7 +411,7 @@ ONCE:
           }
 
         - NAME: transform_points_to_voxels_placeholder
-          VOXEL_SIZE: [ 0.32, 0.32, 6]
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]
 
 LYFT:
     MAP_LYFT_TO_CLASS : {
@@ -476,4 +475,4 @@ LYFT:
           }
 
         - NAME: transform_points_to_voxels_placeholder
-          VOXEL_SIZE: [ 0.32, 0.32, 6]
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]

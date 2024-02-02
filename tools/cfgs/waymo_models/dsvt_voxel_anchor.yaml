@@ -115,14 +115,116 @@ MODEL:
         DIR_LIMIT_OFFSET: 0.0
         NUM_DIR_BINS: 2
 
-        ANCHOR_GENERATOR_CONFIG: [
+        # ANCHOR_GENERATOR_CONFIG: [
+        #     {
+        #         'class_name': 'CAR',
+        #         'anchor_sizes': [[3.9, 1.6, 1.56]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.55,
+        #         'unmatched_threshold': 0.4
+        #     },
+        #     {
+        #         'class_name': 'BUS',
+        #         'anchor_sizes': [[5.9, 1.6, 2.56]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.55,
+        #         'unmatched_threshold': 0.4
+        #     },
+        #     {
+        #         'class_name': 'TRUCK',
+        #         'anchor_sizes': [[5.9, 1.6, 2.56]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.55,
+        #         'unmatched_threshold': 0.4
+        #     },
+        #     {
+        #         'class_name': 'VAN',
+        #         'anchor_sizes': [[5.9, 1.6, 2.56]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.55,
+        #         'unmatched_threshold': 0.4
+        #     },
+        #     {
+        #         'class_name': 'TRAILER',
+        #         'anchor_sizes': [[6.9, 1.6, 2.56]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.55,
+        #         'unmatched_threshold': 0.4
+        #     },
+        #     {
+        #         'class_name': 'EMERGENCY_VEHICLE',
+        #         'anchor_sizes': [[4.9, 1.6, 2.56]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.55,
+        #         'unmatched_threshold': 0.4
+        #     },
+        #     {
+        #         'class_name': 'BICYCLE',
+        #         'anchor_sizes': [[0.8, 0.6, 1.73]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.5,
+        #         'unmatched_threshold': 0.35
+        #     },
+        #     {
+        #         'class_name': 'MOTORCYCLE',
+        #         'anchor_sizes': [[0.8, 0.6, 1.73]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.5,
+        #         'unmatched_threshold': 0.35
+        #     },
+        #     {
+        #         'class_name': 'PEDESTRIAN',
+        #         'anchor_sizes': [[0.8, 0.6, 1.73]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.5,
+        #         'unmatched_threshold': 0.35
+        #     },
+        #     {
+        #         'class_name': 'OTHER',
+        #         'anchor_sizes': [[4.9, 1.6, 2.56]],
+        #         'anchor_rotations': [0, 1.57],
+        #         'anchor_bottom_heights': [0],
+        #         'align_center': False,
+        #         'feature_map_stride': 1,
+        #         'matched_threshold': 0.5,
+        #         'unmatched_threshold': 0.35
+        #     }
+        # ]
+         ANCHOR_GENERATOR_CONFIG: [
             {
                 'class_name': 'Vehicle',
                 'anchor_sizes': [[4.7, 2.1, 1.7]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [0],
                 'align_center': False,
-                'feature_map_stride': 8,
+                'feature_map_stride': 1,
                 'matched_threshold': 0.55,
                 'unmatched_threshold': 0.4
             },
@@ -132,7 +234,7 @@ MODEL:
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [0],
                 'align_center': False,
-                'feature_map_stride': 8,
+                'feature_map_stride': 1,
                 'matched_threshold': 0.5,
                 'unmatched_threshold': 0.35
             },
@@ -142,7 +244,7 @@ MODEL:
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [0],
                 'align_center': False,
-                'feature_map_stride': 8,
+                'feature_map_stride': 1,
                 'matched_threshold': 0.5,
                 'unmatched_threshold': 0.35
             }
