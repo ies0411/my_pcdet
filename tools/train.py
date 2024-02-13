@@ -85,7 +85,7 @@ def parse_config():
         help="set extra config keys if needed",
     )
 
-    parsessr.add_argument(
+    parser.add_argument(
         "--max_waiting_mins", type=int, default=0, help="max waiting minutes"
     )
     parser.add_argument("--start_epoch", type=int, default=0, help="")
