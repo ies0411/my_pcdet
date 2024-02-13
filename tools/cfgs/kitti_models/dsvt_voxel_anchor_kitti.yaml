@@ -51,7 +51,6 @@ MODEL:
         UPSAMPLE_STRIDES: [ 1, 2, 4 ]
         NUM_UPSAMPLE_FILTERS: [ 128, 128, 128 ]
 
-
     DENSE_HEAD:
         NAME: AnchorHeadSingle
         CLASS_AGNOSTIC: False
@@ -111,23 +110,35 @@ MODEL:
                 'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
             }
 
-    # POST_PROCESSING:
+    POST_PROCESSING:
         # RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
         # EVAL_METRIC: waymo
-    POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
         SCORE_THRESH: 0.1
         OUTPUT_RAW_SCORE: False
-        EVAL_METRIC: kitti
 
-
+        EVAL_METRIC: custom
 
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.1
+            NMS_THRESH: 0.5
             NMS_PRE_MAXSIZE: 4096
             NMS_POST_MAXSIZE: 500
+    # POST_PROCESSING:
+    #     RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+    #     SCORE_THRESH: 0.1
+    #     OUTPUT_RAW_SCORE: False
+    #     EVAL_METRIC: kitti
+
+
+
+    #     NMS_CONFIG:
+    #         MULTI_CLASSES_NMS: False
+    #         NMS_TYPE: nms_gpu
+    #         NMS_THRESH: 0.1
+    #         NMS_PRE_MAXSIZE: 4096
+    #         NMS_POST_MAXSIZE: 500
 
 
 OPTIMIZATION:

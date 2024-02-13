@@ -1059,7 +1059,16 @@
 
 
 
+#####################
 
+"""_summary_
+
+Raises:
+    ValueError: _description_
+
+Returns:
+    _type_: _description_
+"""
 import io as sysio
 
 import numba

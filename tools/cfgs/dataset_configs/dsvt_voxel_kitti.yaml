@@ -1,8 +1,8 @@
 DATASET: 'KittiDataset'
 DATA_PATH: '/mnt/nas3/Data/kitti'
 
-# POINT_CLOUD_RANGE: [-74.88, -74.88, -2, 74.88, 74.88, 4.0]
-POINT_CLOUD_RANGE: [0, -40, -3, 70.4, 40, 1]
+POINT_CLOUD_RANGE: [-74.88, -74.88, -2, 74.88, 74.88, 4.0]
+# POINT_CLOUD_RANGE: [0, -40, -3, 70.4, 40, 1]
 
 DATA_SPLIT: {
     'train': train,
@@ -12,6 +12,11 @@ DATA_SPLIT: {
 INFO_PATH: {
     'train': [kitti_infos_train.pkl],
     'test': [kitti_infos_val.pkl],
+}
+MAP_CLASS_TO_KITTI: {
+    'Car': 'Car',
+    'Pedestrian': 'Pedestrian',
+    'Cyclist': 'Cyclist',
 }
 
 GET_ITEM_LIST: ["points"]
