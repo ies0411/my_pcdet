@@ -14,7 +14,7 @@ DATA_CONFIG:
     _BASE_CONFIG_: cfgs/all_models/dataset_dsvt.yaml
 
 MODEL:
-    NAME: CenterPoint
+    NAME: SECONDNet
 
     VFE:
         NAME: DynamicVoxelVFE
@@ -139,7 +139,7 @@ MODEL:
     #         NMS_POST_MAXSIZE: 500
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 1
+    BATCH_SIZE_PER_GPU: 2
     NUM_EPOCHS: 24
 
     OPTIMIZER: adam_onecycle
