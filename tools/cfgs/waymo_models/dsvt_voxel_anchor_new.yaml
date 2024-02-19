@@ -1,17 +1,62 @@
-TYPE : 'ALL'
-
-CLASS_NAMES: "KITTI"
-
-CLASS_NAMES_KITTI: ['Car', 'Pedestrian', 'Cyclist']
-CLASS_NAMES_WAYMO: ['Vehicle', 'Pedestrian', 'Cyclist']
-CLASS_NAMES_NUSCENES: ['car', 'pedestrian', 'cyclist']
-CLASS_NAMES_NIA : ['Vehicle', 'Human', 'Cyclist']
-CLASS_NAMES_ARGO2 : ['Regular_vehicle', 'Pedestrian', 'Bicyclist']
-CLASS_NAMES_ONCE : ['Car', 'Pedestrian', 'Bicyclist']
-CLASS_NAMES_LYFT : ['car', 'pedestrian', 'Cyclist']
+CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG:
-    _BASE_CONFIG_: cfgs/all_models/dataset_dsvt_voxel.yaml
+    _BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml
+    SAMPLED_INTERVAL: {'train': 1, 'test': 1}
+    POINT_CLOUD_RANGE: [-74.88, -74.88, -2, 74.88, 74.88, 4.0]
+    POINTS_TANH_DIM: [3, 4]
+    DATA_AUGMENTOR:
+        DISABLE_AUG_LIST: ['placeholder']
+        AUG_CONFIG_LIST:
+            - NAME: gt_sampling
+              USE_ROAD_PLANE: False
+              DB_INFO_PATH:
+                - waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1.pkl
+
+              USE_SHARED_MEMORY: False  # set it to True to speed up (it costs about 15GB shared memory)
+              DB_DATA_PATH:
+                - waymo_processed_data_v0_5_0_gt_database_train_sampled_1_global.npy
+
+              BACKUP_DB_INFO:
+                # if the above DB_INFO cannot be found, will use this backup one
+                DB_INFO_PATH: waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1_multiframe_-4_to_0.pkl
+                DB_DATA_PATH: waymo_processed_data_v0_5_0_gt_database_train_sampled_1_multiframe_-4_to_0_global.npy
+                NUM_POINT_FEATURES: 6
+
+              PREPARE: {
+                filter_by_min_points: ['Vehicle:5', 'Pedestrian:10', 'Cyclist:10'],
+                filter_by_difficulty: [-1],
+              }
+
+              SAMPLE_GROUPS: ['Vehicle:15', 'Pedestrian:10', 'Cyclist:10']
+              NUM_POINT_FEATURES: 5
+              REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+              LIMIT_WHOLE_SCENE: True
+
+            - NAME: random_world_flip
+              ALONG_AXIS_LIST: ['x', 'y']
+
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
+
+            - NAME: random_world_translation
+              NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+
+    DATA_PROCESSOR:
+        - NAME: mask_points_and_boxes_outside_range
+          REMOVE_OUTSIDE_BOXES: True
+
+        - NAME: shuffle_points
+          SHUFFLE_ENABLED: {
+              'train': True,
+              'test': True
+          }
+
+        - NAME: transform_points_to_voxels_placeholder
+          VOXEL_SIZE: [ 0.32, 0.32, 0.1875]
 
 MODEL:
     NAME: SECONDNet
@@ -61,10 +106,8 @@ MODEL:
         UPSAMPLE_STRIDES: [ 1, 2, 4 ]
         NUM_UPSAMPLE_FILTERS: [ 128, 128, 128 ]
 
-
-
     DENSE_HEAD:
-        NAME: AnchorHeadMulti
+        NAME: AnchorHeadSingle
         CLASS_AGNOSTIC: False
 
         USE_DIRECTION_CLASSIFIER: True
@@ -72,24 +115,23 @@ MODEL:
         DIR_LIMIT_OFFSET: 0.0
         NUM_DIR_BINS: 2
 
-        USE_MULTIHEAD: True
-        SEPARATE_MULTIHEAD: True
+
         ANCHOR_GENERATOR_CONFIG: [
             {
-                'class_name': 'Car',
-                'anchor_sizes': [[3.9, 1.6, 1.56]],
+                'class_name': 'Vehicle',
+                'anchor_sizes': [[4.7, 2.1, 1.7]],
                 'anchor_rotations': [0, 1.57],
-                'anchor_bottom_heights': [-1.6],
+                'anchor_bottom_heights': [0],
                 'align_center': False,
                 'feature_map_stride': 1,
-                'matched_threshold': 0.6,
-                'unmatched_threshold': 0.45
+                'matched_threshold': 0.55,
+                'unmatched_threshold': 0.4
             },
             {
                 'class_name': 'Pedestrian',
-                'anchor_sizes': [[0.8, 0.6, 1.73]],
+                'anchor_sizes': [[0.91, 0.86, 1.73]],
                 'anchor_rotations': [0, 1.57],
-                'anchor_bottom_heights': [-1.6],
+                'anchor_bottom_heights': [0],
                 'align_center': False,
                 'feature_map_stride': 1,
                 'matched_threshold': 0.5,
@@ -97,9 +139,9 @@ MODEL:
             },
             {
                 'class_name': 'Cyclist',
-                'anchor_sizes': [[1.76, 0.6, 1.73]],
+                'anchor_sizes': [[1.78, 0.84, 1.78]],
                 'anchor_rotations': [0, 1.57],
-                'anchor_bottom_heights': [-1.6],
+                'anchor_bottom_heights': [0],
                 'align_center': False,
                 'feature_map_stride': 1,
                 'matched_threshold': 0.5,
@@ -107,27 +149,13 @@ MODEL:
             }
         ]
 
-        SHARED_CONV_NUM_FILTER: 64
-
-        RPN_HEAD_CFGS: [
-            {
-                'HEAD_CLS_NAME': ['Car'],
-            },
-            {
-                'HEAD_CLS_NAME': ['Pedestrian'],
-            },
-            {
-                'HEAD_CLS_NAME': ['Cyclist'],
-            }
-        ]
-
         TARGET_ASSIGNER_CONFIG:
-           NAME: AxisAlignedTargetAssigner
-           POS_FRACTION: -1.0
-           SAMPLE_SIZE: 512
-           NORM_BY_NUM_EXAMPLES: False
-           MATCH_HEIGHT: False
-           BOX_CODER: ResidualCoder
+            NAME: AxisAlignedTargetAssigner
+            POS_FRACTION: -1.0
+            SAMPLE_SIZE: 512
+            NORM_BY_NUM_EXAMPLES: False
+            MATCH_HEIGHT: False
+            BOX_CODER: ResidualCoder
 
         LOSS_CONFIG:
             LOSS_WEIGHTS: {
@@ -137,27 +165,17 @@ MODEL:
                 'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
             }
 
-
-
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        MULTI_CLASSES_NMS: True
         SCORE_THRESH: 0.1
         OUTPUT_RAW_SCORE: False
-
-        EVAL_METRIC: kitti
-
+        EVAL_METRIC: waymo
         NMS_CONFIG:
-            MULTI_CLASSES_NMS: True
+            MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.1
+            NMS_THRESH: 0.7
             NMS_PRE_MAXSIZE: 4096
             NMS_POST_MAXSIZE: 500
-
-
-    # POST_PROCESSING:
-    #     RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-    #     EVAL_METRIC: waymo
     # POST_PROCESSING:
     #     RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
     #     SCORE_THRESH: 0.1
@@ -174,7 +192,7 @@ MODEL:
     #         NMS_POST_MAXSIZE: 500
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 1
+    BATCH_SIZE_PER_GPU: 2
     NUM_EPOCHS: 24
 
     OPTIMIZER: adam_onecycle

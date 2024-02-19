@@ -27,26 +27,26 @@ MODEL:
         NAME: DSVT
         INPUT_LAYER:
             sparse_shape: [468, 468, 32]
-            downsample_stride: [[1, 1, 4], [1, 1, 4], [1, 1, 2]]
-            d_model: [192, 192, 192, 192]
-            set_info: [[48, 1], [48, 1], [48, 1], [48, 1]]
-            window_shape: [[12, 12, 32], [12, 12, 8], [12, 12, 2], [12, 12, 1]]
+            downsample_stride: [[1, 1, 4], [1, 1, 4], [1, 1, 4], [1, 1, 2]]
+            d_model: [192, 192, 192, 192, 192]
+            set_info: [[48, 1], [48, 1], [48, 1], [48, 1], [48, 1]]
+            window_shape: [[12, 12, 32], [12, 12, 8], [12, 12, 2],[12, 12, 1], [12, 12, 1]]
             hybrid_factor: [2, 2, 1] # x, y, z
-            shifts_list: [[[0, 0, 0], [6, 6, 0]], [[0, 0, 0], [6, 6, 0]], [[0, 0, 0], [6, 6, 0]], [[0, 0, 0], [6, 6, 0]]]
+            shifts_list: [[[0, 0, 0], [6, 6, 0]], [[0, 0, 0], [6, 6, 0]], [[0, 0, 0], [6, 6, 0]], [[0, 0, 0], [6, 6, 0]], [[0, 0, 0], [6, 6, 0]]]
             normalize_pos: False
 
-        block_name: ['DSVTBlock','DSVTBlock','DSVTBlock','DSVTBlock']
-        set_info: [[48, 1], [48, 1], [48, 1], [48, 1]]
-        d_model: [192, 192, 192, 192]
-        nhead: [8, 8, 8, 8]
-        dim_feedforward: [384, 384, 384, 384]
+        block_name: ['DSVTBlock','DSVTBlock','DSVTBlock','DSVTBlock','DSVTBlock']
+        set_info: [[48, 1], [48, 1], [48, 1], [48, 1], [48, 1]]
+        d_model: [192, 192, 192, 192, 192]
+        nhead: [8, 8, 8, 8, 8]
+        dim_feedforward: [384, 384, 384, 384, 384]
         dropout: 0.0
         activation: gelu
         reduction_type: 'attention'
         output_shape: [468, 468]
         conv_out_channel: 192
         # You can enable torch.utils.checkpoint to save GPU memory
-        USE_CHECKPOINT: True
+        # USE_CHECKPOINT: True
 
     MAP_TO_BEV:
         NAME: PointPillarScatter3d
@@ -129,7 +129,7 @@ MODEL:
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 3
+    BATCH_SIZE_PER_GPU: 1
     NUM_EPOCHS: 24
 
     OPTIMIZER: adam_onecycle

@@ -11,7 +11,7 @@ CLASS_NAMES_ONCE : ['Car', 'Pedestrian', 'Bicyclist']
 CLASS_NAMES_LYFT : ['car', 'pedestrian', 'Cyclist']
 
 DATA_CONFIG:
-    _BASE_CONFIG_: cfgs/all_models/dataset_dsvt.yaml
+    _BASE_CONFIG_: cfgs/all_models/dataset_dsvt_pillar.yaml
 
 MODEL:
     NAME: CenterPoint
@@ -45,7 +45,7 @@ MODEL:
         output_shape: [468, 468]
         conv_out_channel: 192
         # You can enable torch.utils.checkpoint to save GPU memory
-        USE_CHECKPOINT: True
+        # USE_CHECKPOINT: True
 
     MAP_TO_BEV:
         NAME: PointPillarScatter3d
@@ -177,7 +177,7 @@ MODEL:
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 3
+    BATCH_SIZE_PER_GPU: 2
     NUM_EPOCHS: 24
 
     OPTIMIZER: adam_onecycle
