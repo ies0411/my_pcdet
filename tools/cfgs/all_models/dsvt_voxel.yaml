@@ -38,13 +38,13 @@ MODEL:
         block_name: ['DSVTBlock','DSVTBlock','DSVTBlock','DSVTBlock']
         set_info: [[48, 1], [48, 1], [48, 1], [48, 1]]
         d_model: [192, 192, 192, 192]
-        nhead: [8, 8, 8, 8]
+        nhead: [12, 12, 12, 12]
         dim_feedforward: [384, 384, 384, 384]
-        dropout: 0.0
+        dropout: 0.2
         activation: gelu
         reduction_type: 'attention'
         output_shape: [468, 468]
-        conv_out_channel: 192
+        conv_out_channel: 384
         # You can enable torch.utils.checkpoint to save GPU memory
         USE_CHECKPOINT: True
 
@@ -69,7 +69,7 @@ MODEL:
             ['Car', 'Pedestrian', 'Cyclist']
         ]
 
-        SHARED_CONV_CHANNEL: 64
+        SHARED_CONV_CHANNEL: 256
         USE_BIAS_BEFORE_NORM: False
         NUM_HM_CONV: 2
 
@@ -129,7 +129,7 @@ MODEL:
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 3
+    BATCH_SIZE_PER_GPU: 1
     NUM_EPOCHS: 24
 
     OPTIMIZER: adam_onecycle
