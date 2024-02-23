@@ -24,6 +24,29 @@ MODEL:
         NUM_FILTERS: [ 192, 192 ]
 
     BACKBONE_3D:
+        # NAME: DSVT
+        # INPUT_LAYER:
+        #     sparse_shape: [468, 468, 1]
+        #     downsample_stride: []
+        #     d_model: [192]
+        #     set_info: [[36, 4]]
+        #     window_shape: [[12, 12, 1]]
+        #     hybrid_factor: [2, 2, 1] # x, y, z
+        #     shifts_list: [[[0, 0, 0], [6, 6, 0]]]
+        #     normalize_pos: False
+
+        # block_name: ['DSVTBlock']
+        # set_info: [[36, 4]]
+        # d_model: [192]
+        # nhead: [12]
+        # dim_feedforward: [384]
+        # dropout: 0.3
+        # activation: gelu
+        # output_shape: [468, 468]
+        # conv_out_channel: 384
+        # # 192
+        # # You can enable torch.utils.checkpoint to save GPU memory
+        # USE_CHECKPOINT: True
         NAME: DSVT
         INPUT_LAYER:
             sparse_shape: [468, 468, 1]
@@ -38,15 +61,14 @@ MODEL:
         block_name: ['DSVTBlock']
         set_info: [[36, 4]]
         d_model: [192]
-        nhead: [12]
+        nhead: [8]
         dim_feedforward: [384]
         dropout: 0.2
         activation: gelu
         output_shape: [468, 468]
-        conv_out_channel: 384
-        # 192
+        conv_out_channel: 192
         # You can enable torch.utils.checkpoint to save GPU memory
-        USE_CHECKPOINT: True
+        USE_CHECKPOINT: False
 
     MAP_TO_BEV:
         NAME: PointPillarScatter3d
@@ -69,7 +91,7 @@ MODEL:
             ['Car', 'Pedestrian', 'Cyclist']
         ]
 
-        SHARED_CONV_CHANNEL: 256
+        SHARED_CONV_CHANNEL: 64
         USE_BIAS_BEFORE_NORM: False
         NUM_HM_CONV: 2
 
