@@ -44,14 +44,14 @@ KITTI:
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            - NAME: random_world_rotation
-              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            # - NAME: random_world_rotation
+            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            - NAME: random_world_scaling
-              WORLD_SCALE_RANGE: [0.95, 1.05]
+            # - NAME: random_world_scaling
+            #   WORLD_SCALE_RANGE: [0.95, 1.05]
 
-            - NAME: random_world_translation
-              NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+            # - NAME: random_world_translation
+            #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
 
     POINT_FEATURE_ENCODING: {
@@ -113,14 +113,14 @@ WAYMO:
           - NAME: random_world_flip
             ALONG_AXIS_LIST: ['x', 'y']
 
-          - NAME: random_world_rotation
-            WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+          # - NAME: random_world_rotation
+          #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-          - NAME: random_world_scaling
-            WORLD_SCALE_RANGE: [0.95, 1.05]
+          # - NAME: random_world_scaling
+          #   WORLD_SCALE_RANGE: [0.95, 1.05]
 
-          - NAME: random_world_translation
-            NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+          # - NAME: random_world_translation
+          #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
 
 
@@ -184,14 +184,14 @@ NUSCENES:
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            - NAME: random_world_rotation
-              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            # - NAME: random_world_rotation
+            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            - NAME: random_world_scaling
-              WORLD_SCALE_RANGE: [0.95, 1.05]
+            # - NAME: random_world_scaling
+            #   WORLD_SCALE_RANGE: [0.95, 1.05]
 
-            - NAME: random_world_translation
-              NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+            # - NAME: random_world_translation
+            #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
 
 
@@ -261,14 +261,14 @@ NIA:
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            - NAME: random_world_rotation
-              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            # - NAME: random_world_rotation
+            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            - NAME: random_world_scaling
-              WORLD_SCALE_RANGE: [0.95, 1.05]
+            # - NAME: random_world_scaling
+            #   WORLD_SCALE_RANGE: [0.95, 1.05]
 
-            - NAME: random_world_translation
-              NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+            # - NAME: random_world_translation
+            #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
     DATA_PROCESSOR:
         - NAME: mask_points_and_boxes_outside_range
@@ -316,14 +316,14 @@ ARGO2:
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            - NAME: random_world_rotation
-              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            # - NAME: random_world_rotation
+            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            - NAME: random_world_scaling
-              WORLD_SCALE_RANGE: [0.95, 1.05]
+            # - NAME: random_world_scaling
+            #   WORLD_SCALE_RANGE: [0.95, 1.05]
 
-            - NAME: random_world_translation
-              NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+            # - NAME: random_world_translation
+            #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
 
     POINT_FEATURE_ENCODING: {
@@ -383,14 +383,14 @@ ONCE:
           - NAME: random_world_flip
             ALONG_AXIS_LIST: ['x', 'y']
 
-          - NAME: random_world_rotation
-            WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+          # - NAME: random_world_rotation
+          #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-          - NAME: random_world_scaling
-            WORLD_SCALE_RANGE: [0.95, 1.05]
+          # - NAME: random_world_scaling
+          #   WORLD_SCALE_RANGE: [0.95, 1.05]
 
-          - NAME: random_world_translation
-            NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+          # - NAME: random_world_translation
+          #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
 
     POINT_FEATURE_ENCODING: {
@@ -447,14 +447,14 @@ LYFT:
           - NAME: random_world_flip
             ALONG_AXIS_LIST: ['x', 'y']
 
-          - NAME: random_world_rotation
-            WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+          # - NAME: random_world_rotation
+          #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-          - NAME: random_world_scaling
-            WORLD_SCALE_RANGE: [0.95, 1.05]
+          # - NAME: random_world_scaling
+          #   WORLD_SCALE_RANGE: [0.95, 1.05]
 
-          - NAME: random_world_translation
-            NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
+          # - NAME: random_world_translation
+          #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
 
     POINT_FEATURE_ENCODING: {

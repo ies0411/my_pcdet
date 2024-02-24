@@ -22,6 +22,8 @@ MODEL:
         USE_ABSLOTE_XYZ: True
         USE_NORM: True
         NUM_FILTERS: [ 192, 192 ]
+    # VFE:
+    #     NAME: MeanVFE
 
     BACKBONE_3D:
         NAME: DSVT
@@ -46,22 +48,109 @@ MODEL:
         output_shape: [468, 468]
         conv_out_channel: 192
         # You can enable torch.utils.checkpoint to save GPU memory
-        # USE_CHECKPOINT: True
+        USE_CHECKPOINT: False
+
+    # MAP_TO_BEV:
+    #     NAME: PointPillarScatter3d
+    #     INPUT_SHAPE: [468, 468, 1]
+    #     NUM_BEV_FEATURES: 192
+
+    # BACKBONE_2D:
+    #     NAME: BaseBEVResBackbone
+    #     LAYER_NUMS: [ 1, 2, 2 ]
+    #     LAYER_STRIDES: [ 1, 2, 2 ]
+    #     NUM_FILTERS: [ 128, 128, 256 ]
+    #     UPSAMPLE_STRIDES: [ 1, 2, 4 ]
+    #     NUM_UPSAMPLE_FILTERS: [ 128, 128, 128 ]
+
+
+
+    # DENSE_HEAD:
+    #     NAME: AnchorHeadMulti
+    #     CLASS_AGNOSTIC: False
+
+    #     USE_DIRECTION_CLASSIFIER: True
+    #     DIR_OFFSET: 0.78539
+    #     DIR_LIMIT_OFFSET: 0.0
+    #     NUM_DIR_BINS: 2
+
+    #     USE_MULTIHEAD: True
+    #     SEPARATE_MULTIHEAD: True
+    #     ANCHOR_GENERATOR_CONFIG: [
+    #         {
+    #             'class_name': 'Car',
+    #             'anchor_sizes': [[3.9, 1.6, 1.56]],
+    #             'anchor_rotations': [0, 1.57],
+    #             'anchor_bottom_heights': [-1.6],
+    #             'align_center': False,
+    #             'feature_map_stride': 1,
+    #             'matched_threshold': 0.6,
+    #             'unmatched_threshold': 0.45
+    #         },
+    #         {
+    #             'class_name': 'Pedestrian',
+    #             'anchor_sizes': [[0.8, 0.6, 1.73]],
+    #             'anchor_rotations': [0, 1.57],
+    #             'anchor_bottom_heights': [-1.6],
+    #             'align_center': False,
+    #             'feature_map_stride': 1,
+    #             'matched_threshold': 0.5,
+    #             'unmatched_threshold': 0.35
+    #         },
+    #         {
+    #             'class_name': 'Cyclist',
+    #             'anchor_sizes': [[1.76, 0.6, 1.73]],
+    #             'anchor_rotations': [0, 1.57],
+    #             'anchor_bottom_heights': [-1.6],
+    #             'align_center': False,
+    #             'feature_map_stride': 1,
+    #             'matched_threshold': 0.5,
+    #             'unmatched_threshold': 0.35
+    #         }
+    #     ]
+
+    #     SHARED_CONV_NUM_FILTER: 64
+
+    #     RPN_HEAD_CFGS: [
+    #         {
+    #             'HEAD_CLS_NAME': ['Car'],
+    #         },
+    #         {
+    #             'HEAD_CLS_NAME': ['Pedestrian'],
+    #         },
+    #         {
+    #             'HEAD_CLS_NAME': ['Cyclist'],
+    #         }
+    #     ]
+
+    #     TARGET_ASSIGNER_CONFIG:
+    #        NAME: AxisAlignedTargetAssigner
+    #        POS_FRACTION: -1.0
+    #        SAMPLE_SIZE: 512
+    #        NORM_BY_NUM_EXAMPLES: False
+    #        MATCH_HEIGHT: False
+    #        BOX_CODER: ResidualCoder
+
+    #     LOSS_CONFIG:
+    #         LOSS_WEIGHTS: {
+    #             'cls_weight': 1.0,
+    #             'loc_weight': 2.0,
+    #             'dir_weight': 0.2,
+    #             'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+    #         }
 
     MAP_TO_BEV:
-        NAME: PointPillarScatter3d
-        INPUT_SHAPE: [468, 468, 1]
-        NUM_BEV_FEATURES: 192
+        NAME: HeightCompression
+        NUM_BEV_FEATURES: 256
 
     BACKBONE_2D:
         NAME: BaseBEVResBackbone
-        LAYER_NUMS: [ 1, 2, 2 ]
-        LAYER_STRIDES: [ 1, 2, 2 ]
-        NUM_FILTERS: [ 128, 128, 256 ]
-        UPSAMPLE_STRIDES: [ 1, 2, 4 ]
-        NUM_UPSAMPLE_FILTERS: [ 128, 128, 128 ]
 
-
+        LAYER_NUMS: [5, 5]
+        LAYER_STRIDES: [1, 2]
+        NUM_FILTERS: [128, 512]
+        UPSAMPLE_STRIDES: [1, 2]
+        NUM_UPSAMPLE_FILTERS: [256, 512]
 
     DENSE_HEAD:
         NAME: AnchorHeadMulti
@@ -81,7 +170,7 @@ MODEL:
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-1.6],
                 'align_center': False,
-                'feature_map_stride': 1,
+                'feature_map_stride': 8,
                 'matched_threshold': 0.6,
                 'unmatched_threshold': 0.45
             },
@@ -91,7 +180,7 @@ MODEL:
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-1.6],
                 'align_center': False,
-                'feature_map_stride': 1,
+                'feature_map_stride': 8,
                 'matched_threshold': 0.5,
                 'unmatched_threshold': 0.35
             },
@@ -101,7 +190,7 @@ MODEL:
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-1.6],
                 'align_center': False,
-                'feature_map_stride': 1,
+                'feature_map_stride': 8,
                 'matched_threshold': 0.5,
                 'unmatched_threshold': 0.35
             }
@@ -136,8 +225,6 @@ MODEL:
                 'dir_weight': 0.2,
                 'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
             }
-
-
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
@@ -178,7 +265,7 @@ OPTIMIZATION:
     NUM_EPOCHS: 24
 
     OPTIMIZER: adam_onecycle
-    LR: 0.003
+    LR: 0.01
     WEIGHT_DECAY: 0.05
     MOMENTUM: 0.9
 
