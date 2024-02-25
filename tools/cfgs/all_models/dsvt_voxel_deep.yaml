@@ -106,7 +106,7 @@ MODEL:
             POST_CENTER_LIMIT_RANGE: [-80, -80, -10.0, 80, 80, 10.0]
             MAX_OBJ_PER_SAMPLE: 500
 
-            USE_IOU_TO_RECTIFY_SCORE: False #True
+            USE_IOU_TO_RECTIFY_SCORE: True
             IOU_RECTIFIER: [0.68, 0.71, 0.65]
 
             NMS_CONFIG:
@@ -125,7 +125,7 @@ OPTIMIZATION:
     NUM_EPOCHS: 24
 
     OPTIMIZER: adam_onecycle
-    LR: 0.003 #
+    LR: 0.0003 #
     WEIGHT_DECAY: 0.05
     MOMENTUM: 0.9
 

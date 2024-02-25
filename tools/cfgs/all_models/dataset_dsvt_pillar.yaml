@@ -222,7 +222,7 @@ NIA:
     }
     DATA_PATH: '/mnt/nas3/Data/PCD/indoor_parking_converted/car_ped/custom'
 
-    POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+    POINT_CLOUD_RANGE: [-74.88, -74.88, -2, 74.88, 74.88, 4.0]
 
     MAP_CLASS_TO_KITTI: {
         'Vehicle': 'Vehicle',

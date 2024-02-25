@@ -25,12 +25,12 @@ KITTI:
     #TODO : balancing sample
     DATA_AUGMENTOR:
         DISABLE_AUG_LIST: ['placeholder']
-        MIX:
-        # 'mix_up','cut_mix'
-          NAME_LIST:  ['mix_up','cut_mix']
-          COLLISION_DETECTION: True
-          ALPHA: 2
-          PROB: 0.3
+        # MIX:
+        # # 'mix_up','cut_mix'
+        #   NAME_LIST:  ['mix_up','cut_mix']
+        #   COLLISION_DETECTION: True
+        #   ALPHA: 2
+        #   PROB: 0.3
         AUG_CONFIG_LIST:
             # - NAME: random_beam_downsample
             #   BEAM: 32
@@ -244,7 +244,7 @@ NIA:
     }
     DATA_PATH: '/mnt/nas3/Data/PCD/indoor_parking_converted/car_ped/custom'
 
-    POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+    POINT_CLOUD_RANGE: [-74.88, -74.88, -2, 74.88, 74.88, 4.0]
 
     MAP_CLASS_TO_KITTI: {
         'Vehicle': 'Vehicle',
