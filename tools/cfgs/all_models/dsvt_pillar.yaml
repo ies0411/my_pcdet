@@ -24,29 +24,6 @@ MODEL:
         NUM_FILTERS: [ 192, 192 ]
 
     BACKBONE_3D:
-        # NAME: DSVT
-        # INPUT_LAYER:
-        #     sparse_shape: [468, 468, 1]
-        #     downsample_stride: []
-        #     d_model: [192]
-        #     set_info: [[36, 4]]
-        #     window_shape: [[12, 12, 1]]
-        #     hybrid_factor: [2, 2, 1] # x, y, z
-        #     shifts_list: [[[0, 0, 0], [6, 6, 0]]]
-        #     normalize_pos: False
-
-        # block_name: ['DSVTBlock']
-        # set_info: [[36, 4]]
-        # d_model: [192]
-        # nhead: [12]
-        # dim_feedforward: [384]
-        # dropout: 0.3
-        # activation: gelu
-        # output_shape: [468, 468]
-        # conv_out_channel: 384
-        # # 192
-        # # You can enable torch.utils.checkpoint to save GPU memory
-        # USE_CHECKPOINT: True
         NAME: DSVT
         INPUT_LAYER:
             sparse_shape: [468, 468, 1]
@@ -63,12 +40,12 @@ MODEL:
         d_model: [192]
         nhead: [8]
         dim_feedforward: [384]
-        dropout: 0.2
+        dropout: 0.0
         activation: gelu
         output_shape: [468, 468]
         conv_out_channel: 192
         # You can enable torch.utils.checkpoint to save GPU memory
-        USE_CHECKPOINT: False
+        USE_CHECKPOINT: True
 
     MAP_TO_BEV:
         NAME: PointPillarScatter3d
@@ -134,7 +111,40 @@ MODEL:
                 NMS_THRESH: [0.75, 0.6, 0.55]
                 NMS_PRE_MAXSIZE: [4096, 4096, 4096]
                 NMS_POST_MAXSIZE: [500, 500, 500]
-# torch.utils.checkpoint는 모든 모델에 효과적인 것은 아닙니다. 모델의 구조와 계산 패턴에 따라 효과가 다를 수 있습니다.
+
+    POST_PROCESSING:
+        RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+        EVAL_METRIC: waymo
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 3
+    NUM_EPOCHS: 24
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.003 #
+    WEIGHT_DECAY: 0.05
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.1
+    DIV_FACTOR: 100
+    DECAY_STEP_LIST: [35, 45]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10
+    LOSS_SCALE_FP16: 32.0
+
+HOOK:
+    DisableAugmentationHook:
+        DISABLE_AUG_LIST: ['gt_sampling','random_world_flip','random_world_rotation','random_world_scaling', 'random_world_translation']
+        NUM_LAST_EPOCHS: 1
+
+        # torch.utils.checkpoint는 모든 모델에 효과적인 것은 아닙니다. 모델의 구조와 계산 패턴에 따라 효과가 다를 수 있습니다.
 # 체크포인트를 사용하면 모델 학습 속도가 향상될 수 있지만, 모델 정확도가 약간 감소할 수 있습니다.
 # torch.utils.checkpoint는 GPU에서만 사용할 수 있습니다.
     # DENSE_HEAD:
@@ -195,35 +205,3 @@ MODEL:
         #         'dir_weight': 0.2,
         #         'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
         #     }
-
-    POST_PROCESSING:
-        RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        EVAL_METRIC: waymo
-
-
-OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 1
-    NUM_EPOCHS: 24
-
-    OPTIMIZER: adam_onecycle
-    LR: 0.003 #
-    WEIGHT_DECAY: 0.05
-    MOMENTUM: 0.9
-
-    MOMS: [0.95, 0.85]
-    PCT_START: 0.1
-    DIV_FACTOR: 100
-    DECAY_STEP_LIST: [35, 45]
-    LR_DECAY: 0.1
-    LR_CLIP: 0.0000001
-
-    LR_WARMUP: False
-    WARMUP_EPOCH: 1
-
-    GRAD_NORM_CLIP: 10
-    LOSS_SCALE_FP16: 32.0
-
-HOOK:
-    DisableAugmentationHook:
-        DISABLE_AUG_LIST: ['gt_sampling','random_world_flip','random_world_rotation','random_world_scaling', 'random_world_translation']
-        NUM_LAST_EPOCHS: 1

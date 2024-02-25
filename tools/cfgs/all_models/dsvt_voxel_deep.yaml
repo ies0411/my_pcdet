@@ -39,7 +39,7 @@ MODEL:
         block_name: ['DSVTBlock','DSVTBlock','DSVTBlock','DSVTBlock']
         set_info: [[48, 1], [48, 1], [48, 1], [48, 1]]
         d_model: [192, 192, 192, 192]
-        nhead: [12, 12, 12, 12]
+        nhead: [8, 8, 8, 8]
         dim_feedforward: [384, 384, 384, 384]
         dropout: 0.0
         activation: gelu
@@ -56,7 +56,7 @@ MODEL:
 
     BACKBONE_2D:
         NAME: BaseBEVResBackbone
-        LAYER_NUMS: [ 1, 2, 2 ]
+        LAYER_NUMS: [ 1, 2, 4 ]
         LAYER_STRIDES: [ 1, 2, 2 ]
         NUM_FILTERS: [ 128, 128, 256 ]
         UPSAMPLE_STRIDES: [ 1, 2, 4 ]
@@ -106,7 +106,7 @@ MODEL:
             POST_CENTER_LIMIT_RANGE: [-80, -80, -10.0, 80, 80, 10.0]
             MAX_OBJ_PER_SAMPLE: 500
 
-            USE_IOU_TO_RECTIFY_SCORE: True
+            USE_IOU_TO_RECTIFY_SCORE: False #True
             IOU_RECTIFIER: [0.68, 0.71, 0.65]
 
             NMS_CONFIG:
