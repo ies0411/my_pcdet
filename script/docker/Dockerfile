@@ -27,3 +27,4 @@ RUN git clone https://github.com/open-mmlab/OpenPCDet.git /opt/dec
 RUN python3 -m pip install --user -e /opt/dec
 RUN pip install --user torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
 RUN pip install --user mayavi av2
+RUN mkdir /opt/lib && cd /opt/lib && git clone https://github.com/subhadarship/kmeans_pytorch && cd kmeans_pytorch && pip install --editable .

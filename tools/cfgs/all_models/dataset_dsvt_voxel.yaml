@@ -32,14 +32,14 @@ KITTI:
         #   ALPHA: 2
         #   PROB: 0.3
         AUG_CONFIG_LIST:
-            # - NAME: random_beam_downsample
-            #   BEAM: 32
-            #   BEAM_PROB: 0.75
+            - NAME: random_beam_downsample
+              BEAM: 32
+              BEAM_PROB: 0.75
 
-            # - NAME: random_beam_upsample
-            #   BEAM: 32
-            #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-            #   PHI_THRESHOLD: 0.03
+            - NAME: random_beam_upsample
+              BEAM: 32
+              BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+              PHI_THRESHOLD: 0.03
 
             - NAME: gt_sampling
               USE_ROAD_PLANE: False
@@ -59,11 +59,11 @@ KITTI:
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            # - NAME: random_world_rotation
-            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            # - NAME: random_world_scaling
-            #   WORLD_SCALE_RANGE: [0.95, 1.05]
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
 
             # - NAME: random_world_translation
             #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
@@ -124,22 +124,23 @@ WAYMO:
     DATA_AUGMENTOR:
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
-          # - NAME: random_beam_downsample
-          #   BEAM: 32
-          #   BEAM_PROB: 0.75
+          - NAME: random_beam_downsample
+            BEAM: 32
+            BEAM_PROB: 0.75
 
-          # - NAME: random_beam_upsample
-          #   BEAM: 32
-          #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-          #   PHI_THRESHOLD: 0.03
+          - NAME: random_beam_upsample
+            BEAM: 32
+            BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            PHI_THRESHOLD: 0.03
+
           - NAME: random_world_flip
             ALONG_AXIS_LIST: ['x', 'y']
 
-          # - NAME: random_world_rotation
-          #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+          - NAME: random_world_rotation
+            WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-          # - NAME: random_world_scaling
-          #   WORLD_SCALE_RANGE: [0.95, 1.05]
+          - NAME: random_world_scaling
+            WORLD_SCALE_RANGE: [0.95, 1.05]
 
           # - NAME: random_world_translation
           #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
@@ -203,14 +204,23 @@ NUSCENES:
 
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
+            - NAME: random_beam_downsample
+              BEAM: 32
+              BEAM_PROB: 0.75
+
+            # - NAME: random_beam_upsample
+            #   BEAM: 32
+            #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            #   PHI_THRESHOLD: 0.03
+
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            # - NAME: random_world_rotation
-            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            # - NAME: random_world_scaling
-            #   WORLD_SCALE_RANGE: [0.95, 1.05]
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
 
             # - NAME: random_world_translation
             #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
@@ -283,11 +293,11 @@ NIA:
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            # - NAME: random_world_rotation
-            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            # - NAME: random_world_scaling
-            #   WORLD_SCALE_RANGE: [0.95, 1.05]
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
 
             # - NAME: random_world_translation
             #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
@@ -335,14 +345,23 @@ ARGO2:
 
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
+            - NAME: random_beam_downsample
+              BEAM: 32
+              BEAM_PROB: 0.75
+
+            - NAME: random_beam_upsample
+              BEAM: 32
+              BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+              PHI_THRESHOLD: 0.03
+
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
-            # - NAME: random_world_rotation
-            #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-            # - NAME: random_world_scaling
-            #   WORLD_SCALE_RANGE: [0.95, 1.05]
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
 
             # - NAME: random_world_translation
             #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
@@ -402,14 +421,22 @@ ONCE:
     DATA_AUGMENTOR:
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
+          - NAME: random_beam_downsample
+            BEAM: 32
+            BEAM_PROB: 0.75
+
+          - NAME: random_beam_upsample
+            BEAM: 32
+            BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            PHI_THRESHOLD: 0.03
           - NAME: random_world_flip
             ALONG_AXIS_LIST: ['x', 'y']
 
-          # - NAME: random_world_rotation
-          #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+          - NAME: random_world_rotation
+            WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-          # - NAME: random_world_scaling
-          #   WORLD_SCALE_RANGE: [0.95, 1.05]
+          - NAME: random_world_scaling
+            WORLD_SCALE_RANGE: [0.95, 1.05]
 
           # - NAME: random_world_translation
           #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
@@ -466,14 +493,23 @@ LYFT:
 
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
+          - NAME: random_beam_downsample
+            BEAM: 32
+            BEAM_PROB: 0.75
+
+          - NAME: random_beam_upsample
+            BEAM: 32
+            BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            PHI_THRESHOLD: 0.03
+
           - NAME: random_world_flip
             ALONG_AXIS_LIST: ['x', 'y']
 
-          # - NAME: random_world_rotation
-          #   WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+          - NAME: random_world_rotation
+            WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
 
-          # - NAME: random_world_scaling
-          #   WORLD_SCALE_RANGE: [0.95, 1.05]
+          - NAME: random_world_scaling
+            WORLD_SCALE_RANGE: [0.95, 1.05]
 
           # - NAME: random_world_translation
           #   NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
