@@ -86,6 +86,7 @@ class DataAugmentor(object):
         return beam_label
 
     def random_beam_upsample(self, data_dict=None, config=None):
+
         if data_dict is None:
             return partial(self.random_beam_upsample, config=config)
         points = data_dict["points"]

@@ -208,10 +208,10 @@ NUSCENES:
               BEAM: 32
               BEAM_PROB: 0.75
 
-            # - NAME: random_beam_upsample
-            #   BEAM: 32
-            #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-            #   PHI_THRESHOLD: 0.03
+            - NAME: random_beam_upsample
+              BEAM: 32
+              BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+              PHI_THRESHOLD: 0.03
 
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
@@ -290,6 +290,15 @@ NIA:
 
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
+            - NAME: random_beam_downsample
+              BEAM: 32
+              BEAM_PROB: 0.75
+
+            # - NAME: random_beam_upsample
+            #   BEAM: 32
+            #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            #   PHI_THRESHOLD: 0.03
+
             - NAME: random_world_flip
               ALONG_AXIS_LIST: ['x', 'y']
 
@@ -425,10 +434,10 @@ ONCE:
             BEAM: 32
             BEAM_PROB: 0.75
 
-          - NAME: random_beam_upsample
-            BEAM: 32
-            BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-            PHI_THRESHOLD: 0.03
+          # - NAME: random_beam_upsample
+          #   BEAM: 32
+          #   BEAM_PROB: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+          #   PHI_THRESHOLD: 0.03
           - NAME: random_world_flip
             ALONG_AXIS_LIST: ['x', 'y']
 
