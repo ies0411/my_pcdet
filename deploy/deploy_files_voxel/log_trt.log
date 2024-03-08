@@ -1,0 +1,63 @@
+2024-03-07 14:03:41,532   INFO  Loading Waymo dataset
+2024-03-07 14:03:44,785   INFO  Total skipped info 0
+2024-03-07 14:03:44,789   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:03:46,946   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:03:47,100   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:03:47,138   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:03:47,139   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:12:58,147   INFO  Loading Waymo dataset
+2024-03-07 14:12:58,147   INFO  Loading Waymo dataset
+2024-03-07 14:13:01,476   INFO  Total skipped info 0
+2024-03-07 14:13:01,476   INFO  Total skipped info 0
+2024-03-07 14:13:01,479   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:13:01,479   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:13:01,656   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:13:01,656   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:13:01,804   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:13:01,804   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:13:01,838   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:13:01,838   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:13:01,840   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:13:01,840   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:13:32,224   INFO  Loading Waymo dataset
+2024-03-07 14:13:35,143   INFO  Total skipped info 0
+2024-03-07 14:13:35,146   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:13:37,509   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:13:37,655   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:13:37,688   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:13:37,690   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:16:12,478   INFO  Loading Waymo dataset
+2024-03-07 14:16:15,611   INFO  Total skipped info 0
+2024-03-07 14:16:15,613   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:16:17,745   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:16:17,882   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:16:17,915   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:16:17,916   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:18:47,862   INFO  Loading Waymo dataset
+2024-03-07 14:18:51,067   INFO  Total skipped info 0
+2024-03-07 14:18:51,071   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:18:53,197   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:18:53,337   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:18:53,369   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:18:53,371   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:20:03,199   INFO  Loading Waymo dataset
+2024-03-07 14:20:06,351   INFO  Total skipped info 0
+2024-03-07 14:20:06,353   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:20:08,695   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:20:08,830   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:20:08,862   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:20:08,864   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:28:29,353   INFO  Loading Waymo dataset
+2024-03-07 14:28:29,353   INFO  Loading Waymo dataset
+2024-03-07 14:28:32,677   INFO  Total skipped info 0
+2024-03-07 14:28:32,677   INFO  Total skipped info 0
+2024-03-07 14:28:32,684   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:28:32,684   INFO  Total samples for Waymo dataset: 39987
+2024-03-07 14:28:32,870   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:28:32,870   INFO  ==> Loading parameters from checkpoint /mnt/nas2/users/eslim/result_log/generalization/dsvt_voxel_240225_r/ckpt/latest_model.pth to GPU
+2024-03-07 14:28:33,009   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:28:33,009   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+6719625+pyf948e89
+2024-03-07 14:28:33,044   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:28:33,044   INFO  Not updated weight vfe.pfn_layers.0.linear.weight: torch.Size([96, 11])
+2024-03-07 14:28:33,046   INFO  ==> Done (loaded 411/412)
+2024-03-07 14:28:33,046   INFO  ==> Done (loaded 411/412)

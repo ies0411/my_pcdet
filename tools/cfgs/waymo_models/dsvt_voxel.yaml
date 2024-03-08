@@ -1,7 +1,9 @@
 CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG:
-    _BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml
+    # _BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml
+    _BASE_CONFIG_: /home/eslim/workspace/OpenPCDet/tools/cfgs/dataset_configs/waymo_dataset.yaml
+
     SAMPLED_INTERVAL: {'train': 1, 'test': 1}
     POINT_CLOUD_RANGE: [-74.88, -74.88, -2, 74.88, 74.88, 4.0]
     POINTS_TANH_DIM: [3, 4]
