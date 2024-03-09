@@ -207,7 +207,7 @@ MODEL:
       - 80
       - 10.0
       SCORE_THRESH: 0.1
-      USE_IOU_TO_RECTIFY_SCORE: true
+      USE_IOU_TO_RECTIFY_SCORE: False
     SEPARATE_HEAD_CFG:
       HEAD_DICT:
         center:
