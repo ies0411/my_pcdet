@@ -1,0 +1,290 @@
+CLASS_NAMES:
+- Person
+DATA_CONFIG:
+  BALANCED_RESAMPLING: false
+  DATASET: CustomDataset
+  DATA_AUGMENTOR:
+    AUG_CONFIG_LIST:
+    - DATABASE_WITH_FAKELIDAR: false
+      DB_INFO_PATH:
+      - custom_dbinfos_train.pkl
+      LIMIT_WHOLE_SCENE: true
+      NAME: gt_sampling
+      NUM_POINT_FEATURES: 4
+      PREPARE:
+        filter_by_min_points:
+        - Person:3
+      REMOVE_EXTRA_WIDTH:
+      - 0.0
+      - 0.0
+      - 0.0
+      SAMPLE_GROUPS:
+      - Person:0
+      USE_ROAD_PLANE: false
+    - ALONG_AXIS_LIST:
+      - x
+      - y
+      NAME: random_world_flip
+    - NAME: random_world_rotation
+      WORLD_ROT_ANGLE:
+      - -0.78539816
+      - 0.78539816
+    - NAME: random_world_scaling
+      WORLD_SCALE_RANGE:
+      - 0.95
+      - 1.05
+    DISABLE_AUG_LIST:
+    - placeholder
+    MIX:
+      ALPHA: 2
+      COLLISION_DETECTION: true
+      NAME_LIST:
+      - mix_up
+      - cut_mix
+      PROB: 0.3
+  DATA_PATH: /opt/ml/input/data/cache_pointcloud/7b0fb3d3-2c5b-4721-8e5f-47eae2c02a9c/20ddb47c-40f0-4f8b-9a39-6a47d403ae9c/custom/
+  DATA_PROCESSOR:
+  - NAME: mask_points_and_boxes_outside_range
+    REMOVE_OUTSIDE_BOXES: true
+  - NAME: shuffle_points
+    SHUFFLE_ENABLED:
+      test: false
+      train: true
+  - NAME: transform_points_to_voxels_placeholder
+    VOXEL_SIZE:
+    - 0.32
+    - 0.32
+    - 6
+  DATA_SPLIT:
+    test: val
+    train: train
+  INFO_PATH:
+    test:
+    - custom_infos_val.pkl
+    train:
+    - custom_infos_train.pkl
+  MAP_CLASS_TO_KITTI:
+    Person: Person
+  OFFSET_Z: -2
+  POINT_CLOUD_RANGE:
+  - -74.88
+  - -74.88
+  - -2
+  - 74.88
+  - 74.88
+  - 4
+  POINT_FEATURE_ENCODING:
+    encoding_type: absolute_coordinates_encoding
+    src_feature_list:
+    - x
+    - y
+    - z
+    - intensity
+    used_feature_list:
+    - x
+    - y
+    - z
+    - intensity
+GENERAL_MODEL: false
+HOOK:
+  DisableAugmentationHook:
+    DISABLE_AUG_LIST:
+    - gt_sampling
+    - random_world_flip
+    - random_world_rotation
+    - random_world_scaling
+    - random_world_translation
+    NUM_LAST_EPOCHS: 1
+MODEL:
+  BACKBONE_2D:
+    LAYER_NUMS:
+    - 1
+    - 2
+    - 2
+    LAYER_STRIDES:
+    - 1
+    - 2
+    - 2
+    NAME: BaseBEVResBackbone
+    NUM_FILTERS:
+    - 128
+    - 128
+    - 256
+    NUM_UPSAMPLE_FILTERS:
+    - 128
+    - 128
+    - 128
+    UPSAMPLE_STRIDES:
+    - 1
+    - 2
+    - 4
+  BACKBONE_3D:
+    INPUT_LAYER:
+      d_model:
+      - 192
+      downsample_stride: []
+      hybrid_factor:
+      - 2
+      - 2
+      - 1
+      normalize_pos: false
+      set_info:
+      - - 36
+        - 4
+      shifts_list:
+      - - - 0
+          - 0
+          - 0
+        - - 6
+          - 6
+          - 0
+      sparse_shape:
+      - 468
+      - 468
+      - 1
+      window_shape:
+      - - 12
+        - 12
+        - 1
+    NAME: DSVT
+    USE_CHECKPOINT: false
+    activation: gelu
+    block_name:
+    - DSVTBlock
+    conv_out_channel: 192
+    d_model:
+    - 192
+    dim_feedforward:
+    - 384
+    dropout: 0.05
+    nhead:
+    - 8
+    output_shape:
+    - 468
+    - 468
+    set_info:
+    - - 36
+      - 4
+  DENSE_HEAD:
+    BN_EPS: 0.001
+    BN_MOM: 0.01
+    CLASS_AGNOSTIC: false
+    CLASS_NAMES_EACH_HEAD:
+    - - Person
+    IOU_REG_LOSS: true
+    LOSS_CONFIG:
+      LOSS_WEIGHTS:
+        cls_weight: 1.0
+        code_weights:
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        - 1.0
+        loc_weight: 2.0
+    NAME: CenterHead
+    NUM_HM_CONV: 2
+    POST_PROCESSING:
+      IOU_RECTIFIER:
+      - 0.65
+      MAX_OBJ_PER_SAMPLE: 500
+      NMS_CONFIG:
+        NMS_POST_MAXSIZE:
+        - 500
+        NMS_PRE_MAXSIZE:
+        - 4096
+        NMS_THRESH:
+        - 0.5
+        NMS_TYPE: class_specific_nms
+      POST_CENTER_LIMIT_RANGE:
+      - -80
+      - -80
+      - -10.0
+      - 80
+      - 80
+      - 10.0
+      SCORE_THRESH: 0.1
+      USE_IOU_TO_RECTIFY_SCORE: true
+    SEPARATE_HEAD_CFG:
+      HEAD_DICT:
+        center:
+          num_conv: 2
+          out_channels: 2
+        center_z:
+          num_conv: 2
+          out_channels: 1
+        dim:
+          num_conv: 2
+          out_channels: 3
+        iou:
+          num_conv: 2
+          out_channels: 1
+        rot:
+          num_conv: 2
+          out_channels: 2
+      HEAD_ORDER:
+      - center
+      - center_z
+      - dim
+      - rot
+    SHARED_CONV_CHANNEL: 64
+    TARGET_ASSIGNER_CONFIG:
+      FEATURE_MAP_STRIDE: 1
+      GAUSSIAN_OVERLAP: 0.1
+      MIN_RADIUS: 2
+      NUM_MAX_OBJS: 500
+    USE_BIAS_BEFORE_NORM: false
+  MAP_TO_BEV:
+    INPUT_SHAPE:
+    - 468
+    - 468
+    - 1
+    NAME: PointPillarScatter3d
+    NUM_BEV_FEATURES: 192
+  NAME: CenterPoint
+  POST_PROCESSING:
+    EVAL_METRIC: custom
+    NMS_CONFIG:
+      MULTI_CLASSES_NMS: false
+      NMS_POST_MAXSIZE: 500
+      NMS_PRE_MAXSIZE: 4096
+      NMS_THRESH: 0.1
+      NMS_TYPE: nms_gpu
+    OUTPUT_RAW_SCORE: false
+    RECALL_THRESH_LIST:
+    - 0.3
+    - 0.5
+    - 0.7
+    SCORE_THRESH: 0.1
+  VFE:
+    NAME: DynamicVoxelVFE
+    NUM_FILTERS:
+    - 192
+    - 192
+    USE_ABSLOTE_XYZ: true
+    USE_NORM: true
+    WITH_DISTANCE: false
+OPTIMIZATION:
+  BATCH_SIZE_PER_GPU: 1
+  DECAY_STEP_LIST:
+  - 35
+  - 45
+  DIV_FACTOR: 100
+  GRAD_NORM_CLIP: 10
+  LOSS_SCALE_FP16: 32.0
+  LR: 0.0007
+  LR_CLIP: 1.0e-07
+  LR_DECAY: 0.1
+  LR_WARMUP: true
+  MOMENTUM: 0.9
+  MOMS:
+  - 0.95
+  - 0.85
+  NUM_EPOCHS: 70
+  OPTIMIZER: adam_onecycle
+  PCT_START: 0.1
+  WARMUP_EPOCH: 8
+  WEIGHT_DECAY: 0.05

@@ -1,0 +1,5 @@
+2024-03-09 04:36:33,305   INFO  Loading Custom dataset.
+2024-03-09 04:36:33,306   INFO  Total samples for CUSTOM dataset: 0
+2024-03-09 04:36:35,417   INFO  ==> Loading parameters from checkpoint ./pillar/model.pth to GPU
+2024-03-09 04:36:35,548   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+255db8f
+2024-03-09 04:36:35,581   INFO  ==> Done (loaded 391/391)
