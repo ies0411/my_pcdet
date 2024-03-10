@@ -607,9 +607,9 @@ class DSVTInputLayer(nn.Module):
         unique_batch_win_inds, contiguous_batch_win_inds = torch.unique(
             batch_win_inds, return_inverse=True
         )
-        voxel_info[
-            f"pooling_mapping_index_stage{stage_id+1}"
-        ] = contiguous_batch_win_inds
+        voxel_info[f"pooling_mapping_index_stage{stage_id+1}"] = (
+            contiguous_batch_win_inds
+        )
 
         # generate empty placeholder features
         placeholder_prepool_feats = voxel_info[f"voxel_feats_stage0"].new_zeros(
@@ -620,9 +620,9 @@ class DSVTInputLayer(nn.Module):
             )
         )
         voxel_info[f"pooling_index_in_pool_stage{stage_id+1}"] = index_in_win
-        voxel_info[
-            f"pooling_preholder_feats_stage{stage_id+1}"
-        ] = placeholder_prepool_feats
+        voxel_info[f"pooling_preholder_feats_stage{stage_id+1}"] = (
+            placeholder_prepool_feats
+        )
 
         # compute pooling coordinates
         unique, inverse = (
@@ -690,6 +690,10 @@ class DSVTInputLayer(nn.Module):
 
         return voxel_info
 
+    # def replace_bincount(self,input_tensor, indices):
+    #     gathered_values = torch.gather(input_tensor, 0, indices.unsqueeze(1))
+    #     return torch.bincount(indices, weights=gathered_values.squeeze(1))
+
     def get_set_single_shift(
         self, batch_win_inds, stage_id, shift_id=None, coors_in_win=None
     ):
@@ -705,6 +709,8 @@ class DSVTInputLayer(nn.Module):
         # get unique set indexs
         contiguous_win_inds = torch.unique(batch_win_inds, return_inverse=True)[1]
         voxelnum_per_win = torch.bincount(contiguous_win_inds)
+
+
         win_num = voxelnum_per_win.shape[0]
         setnum_per_win_float = voxelnum_per_win / voxel_num_set
         setnum_per_win = torch.ceil(setnum_per_win_float).long()
