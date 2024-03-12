@@ -18,8 +18,8 @@ DATA_CONFIG:
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
             - NAME: gt_sampling
-              IMG_AUG_TYPE: nuscenes
-              IMG_AUG_MIXUP: 0.7
+              # IMG_AUG_TYPE: nuscenes
+              # IMG_AUG_MIXUP: 0.7
               DB_INFO_PATH:
                 - nuscenes_dbinfos_10sweeps_withvelo.pkl
 
@@ -59,7 +59,7 @@ DATA_CONFIG:
 
             - NAME: random_world_scaling
               WORLD_SCALE_RANGE: [0.9, 1.1]
-            
+
             - NAME: random_world_translation
               NOISE_TRANSLATE_STD: [0.5, 0.5, 0.5]
 
@@ -82,13 +82,13 @@ DATA_CONFIG:
           VOXEL_SIZE: [0.3, 0.3, 8.0]
 
         - NAME: image_calibrate
-        
+
         - NAME: image_normalize
           mean: [0.485, 0.456, 0.406]
           std: [0.229, 0.224, 0.225]
 MODEL:
     NAME: UniTR
-  
+
     MM_BACKBONE:
       NAME: UniTR
       ACCELERATE: True
@@ -96,8 +96,8 @@ MODEL:
         in_channels: 3
         image_size: [256, 704]
         embed_dims: 128
-        patch_size: 8 
-        patch_norm: True 
+        patch_size: 8
+        patch_norm: True
         norm_cfg: {'type': 'LN'}
 
       IMAGE_INPUT_LAYER:
@@ -108,7 +108,7 @@ MODEL:
         hybrid_factor: [1, 1, 1] # x, y, z
         shifts_list: [[[0, 0, 0], [15, 15, 0]]]
         input_image: True
-      
+
       LIDAR_INPUT_LAYER:
         sparse_shape: [360, 360, 1]
         d_model: [128]
@@ -116,7 +116,7 @@ MODEL:
         window_shape: [[30, 30, 1]]
         hybrid_factor: [1, 1, 1] # x, y, z
         shifts_list: [[[0, 0, 0], [15, 15, 0]]]
-      
+
       set_info: [[90, 4]]
       d_model: [128]
       nhead: [8]
@@ -128,7 +128,7 @@ MODEL:
 
       # fuse backbone config
       FUSE_BACKBONE:
-        IMAGE2LIDAR: 
+        IMAGE2LIDAR:
           block_start: 3
           block_end: 4
           point_cloud_range: [-54.0, -54.0, -10.0, 54.0, 54.0, 10.0]
@@ -157,7 +157,7 @@ MODEL:
             shifts_list: [[[0, 0, 0], [15, 15, 0]]]
             expand_max_voxels: 30
       out_indices: [0, 1, 2, 3]
-    
+
     NECK:
       NAME: GeneralizedLSSFPN
       IN_CHANNELS: [128, 128, 128, 128]
@@ -167,7 +167,7 @@ MODEL:
       NUM_OUTS: 4
       USE_BIAS: True
       ALIGN_CORNERS: True
-    
+
     VTRANSFORM:
       NAME: LSSTransform
       ACCELERATE: True
@@ -200,7 +200,7 @@ MODEL:
 
     BACKBONE_2D:
       NAME: BaseBEVResBackbone
-      LAYER_NUMS: [ 1, 2, 2, 2] # 
+      LAYER_NUMS: [ 1, 2, 2, 2] #
       LAYER_STRIDES: [1, 2, 2, 2]
       NUM_FILTERS: [128, 128, 256, 256]
       UPSAMPLE_STRIDES: [0.5, 1, 2, 4]
@@ -209,7 +209,7 @@ MODEL:
     DENSE_HEAD:
         CLASS_AGNOSTIC: False
         NAME: TransFusionHead
-        QUERY_RADIUS: 20 
+        QUERY_RADIUS: 20
         QUERY_LOCAL: True
         USE_BIAS_BEFORE_NORM: True
 
@@ -235,7 +235,7 @@ MODEL:
                 'vel': {'out_channels': 2, 'num_conv': 2},
                 'iou': {'out_channels': 1, 'num_conv': 2}
             }
-      
+
         TARGET_ASSIGNER_CONFIG:
             FEATURE_MAP_STRIDE: 2
             DATASET: nuScenes
@@ -245,7 +245,7 @@ MODEL:
                 cls_cost: {'gamma': 2.0, 'alpha': 0.25, 'weight': 0.15}
                 reg_cost: {'weight': 0.25}
                 iou_cost: {'weight': 0.25}
-        
+
         LOSS_CONFIG:
             LOSS_WEIGHTS: {
                     'cls_weight': 1.0,
@@ -261,11 +261,11 @@ MODEL:
                 alpha: 0.25
             LOSS_IOU: True
             LOSS_IOU_REG: True
-          
+
         POST_PROCESSING:
             SCORE_THRESH: 0.0
             POST_CENTER_RANGE: [-61.2, -61.2, -10.0, 61.2, 61.2, 10.0]
-            USE_IOU_TO_RECTIFY_SCORE: True 
+            USE_IOU_TO_RECTIFY_SCORE: True
             IOU_RECTIFIER: [0.5]
         NMS_CONFIG:
             NMS_TYPE: nms_gpu
@@ -273,7 +273,7 @@ MODEL:
             NMS_PRE_MAXSIZE: 1000
             NMS_POST_MAXSIZE: 100
             SCORE_THRES: 0.
-          
+
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
@@ -311,7 +311,7 @@ OPTIMIZATION:
     WARMUP_EPOCH: 1
 
     GRAD_NORM_CLIP: 10
-    LOSS_SCALE_FP16: 32 
+    LOSS_SCALE_FP16: 32
 
 HOOK:
   DisableAugmentationHook:

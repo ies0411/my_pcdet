@@ -17,17 +17,16 @@ from .argo2.argo2_dataset import Argo2Dataset
 from .custom.custom_dataset import CustomDataset
 
 __all__ = {
-    'DatasetTemplate': DatasetTemplate,
-    'KittiDataset': KittiDataset,
-    'NuScenesDataset': NuScenesDataset,
-    'WaymoDataset': WaymoDataset,
-    'PandasetDataset': PandasetDataset,
-    'LyftDataset': LyftDataset,
-    'ONCEDataset': ONCEDataset,
-    'CustomDataset': CustomDataset,
-    'Argo2Dataset': Argo2Dataset,
-    'AllinOneDataset': AllinOneDataset,
-
+    "DatasetTemplate": DatasetTemplate,
+    "KittiDataset": KittiDataset,
+    "NuScenesDataset": NuScenesDataset,
+    "WaymoDataset": WaymoDataset,
+    "PandasetDataset": PandasetDataset,
+    "LyftDataset": LyftDataset,
+    "ONCEDataset": ONCEDataset,
+    "CustomDataset": CustomDataset,
+    "Argo2Dataset": Argo2Dataset,
+    "AllinOneDataset": AllinOneDataset,
 }
 
 
@@ -45,17 +44,28 @@ class DistributedSampler(_DistributedSampler):
         else:
             indices = torch.arange(len(self.dataset)).tolist()
 
-        indices += indices[:(self.total_size - len(indices))]
+        indices += indices[: (self.total_size - len(indices))]
         assert len(indices) == self.total_size
 
-        indices = indices[self.rank:self.total_size:self.num_replicas]
+        indices = indices[self.rank : self.total_size : self.num_replicas]
         assert len(indices) == self.num_samples
 
         return iter(indices)
 
 
-def build_dataloader(dataset_cfg, class_names, batch_size, dist, root_path=None, workers=4, seed=None,
-                     logger=None, training=True, merge_all_iters_to_one_epoch=False, total_epochs=0):
+def build_dataloader(
+    dataset_cfg,
+    class_names,
+    batch_size,
+    dist,
+    root_path=None,
+    workers=4,
+    seed=None,
+    logger=None,
+    training=True,
+    merge_all_iters_to_one_epoch=False,
+    total_epochs=0,
+):
 
     dataset = __all__[dataset_cfg.DATASET](
         dataset_cfg=dataset_cfg,
@@ -66,7 +76,7 @@ def build_dataloader(dataset_cfg, class_names, batch_size, dist, root_path=None,
     )
 
     if merge_all_iters_to_one_epoch:
-        assert hasattr(dataset, 'merge_all_iters_to_one_epoch')
+        assert hasattr(dataset, "merge_all_iters_to_one_epoch")
         dataset.merge_all_iters_to_one_epoch(merge=True, epochs=total_epochs)
 
     if dist:
@@ -78,9 +88,16 @@ def build_dataloader(dataset_cfg, class_names, batch_size, dist, root_path=None,
     else:
         sampler = None
     dataloader = DataLoader(
-        dataset, batch_size=batch_size, pin_memory=True, num_workers=workers,
-        shuffle=(sampler is None) and training, collate_fn=dataset.collate_batch,
-        drop_last=False, sampler=sampler, timeout=0, worker_init_fn=partial(common_utils.worker_init_fn, seed=seed)
+        dataset,
+        batch_size=batch_size,
+        pin_memory=True,
+        num_workers=workers,
+        shuffle=(sampler is None) and training,
+        collate_fn=dataset.collate_batch,
+        drop_last=False,
+        sampler=sampler,
+        timeout=0,
+        worker_init_fn=partial(common_utils.worker_init_fn, seed=seed),
     )
 
     return dataset, dataloader, sampler

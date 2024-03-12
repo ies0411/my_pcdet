@@ -16,7 +16,8 @@ from .voxelnext import VoxelNeXt
 from .transfusion import TransFusion
 from .bevfusion import BevFusion
 
-# from .unitr import UniTR
+from .unitr import UniTR
+
 # from .unitr_map import UniTRMAP
 
 __all__ = {
@@ -38,7 +39,7 @@ __all__ = {
     "VoxelNeXt": VoxelNeXt,
     "TransFusion": TransFusion,
     "BevFusion": BevFusion,
-    # "UniTR": UniTR,
+    "UniTR": UniTR,
     # "UniTRMAP": UniTRMAP,
 }
 

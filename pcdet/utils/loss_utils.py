@@ -24,7 +24,7 @@ class SigmoidFocalClassificationLoss(nn.Module):
 
     @staticmethod
     def sigmoid_cross_entropy_with_logits(input: torch.Tensor, target: torch.Tensor):
-        """ PyTorch Implementation for tf.nn.sigmoid_cross_entropy_with_logits:
+        """PyTorch Implementation for tf.nn.sigmoid_cross_entropy_with_logits:
             max(x, 0) - x * z + log(1 + exp(-abs(x))) in
             https://www.tensorflow.org/api_docs/python/tf/nn/sigmoid_cross_entropy_with_logits
 
@@ -38,8 +38,11 @@ class SigmoidFocalClassificationLoss(nn.Module):
             loss: (B, #anchors, #classes) float tensor.
                 Sigmoid cross entropy loss without reduction
         """
-        loss = torch.clamp(input, min=0) - input * target + \
-               torch.log1p(torch.exp(-torch.abs(input)))
+        loss = (
+            torch.clamp(input, min=0)
+            - input * target
+            + torch.log1p(torch.exp(-torch.abs(input)))
+        )
         return loss
 
     def forward(self, input: torch.Tensor, target: torch.Tensor, weights: torch.Tensor):
@@ -56,7 +59,10 @@ class SigmoidFocalClassificationLoss(nn.Module):
             weighted_loss: (B, #anchors, #classes) float tensor after weighting.
         """
         pred_sigmoid = torch.sigmoid(input)
-        alpha_weight = target * self.alpha + (1 - target) * (1 - self.alpha)
+        if self.alpha > 0:
+            alpha_weight = target * self.alpha + (1 - target) * (1 - self.alpha)
+        else:
+            alpha_weight = 1
         pt = target * (1.0 - pred_sigmoid) + (1.0 - target) * pred_sigmoid
         focal_weight = alpha_weight * torch.pow(pt, self.gamma)
 
@@ -64,8 +70,9 @@ class SigmoidFocalClassificationLoss(nn.Module):
 
         loss = focal_weight * bce_loss
 
-        if weights.shape.__len__() == 2 or \
-                (weights.shape.__len__() == 1 and target.shape.__len__() == 2):
+        if weights.shape.__len__() == 2 or (
+            weights.shape.__len__() == 1 and target.shape.__len__() == 2
+        ):
             weights = weights.unsqueeze(-1)
 
         assert weights.shape.__len__() == loss.shape.__len__()
@@ -82,6 +89,7 @@ class WeightedSmoothL1Loss(nn.Module):
                   | abs(x) - 0.5 * beta   otherwise,
     where x = input - target.
     """
+
     def __init__(self, beta: float = 1.0 / 9.0, code_weights: list = None):
         """
         Args:
@@ -103,11 +111,13 @@ class WeightedSmoothL1Loss(nn.Module):
             loss = torch.abs(diff)
         else:
             n = torch.abs(diff)
-            loss = torch.where(n < beta, 0.5 * n ** 2 / beta, n - 0.5 * beta)
+            loss = torch.where(n < beta, 0.5 * n**2 / beta, n - 0.5 * beta)
 
         return loss
 
-    def forward(self, input: torch.Tensor, target: torch.Tensor, weights: torch.Tensor = None):
+    def forward(
+        self, input: torch.Tensor, target: torch.Tensor, weights: torch.Tensor = None
+    ):
         """
         Args:
             input: (B, #anchors, #codes) float tensor.
@@ -131,7 +141,9 @@ class WeightedSmoothL1Loss(nn.Module):
 
         # anchor-wise weighting
         if weights is not None:
-            assert weights.shape[0] == loss.shape[0] and weights.shape[1] == loss.shape[1]
+            assert (
+                weights.shape[0] == loss.shape[0] and weights.shape[1] == loss.shape[1]
+            )
             loss = loss * weights.unsqueeze(-1)
 
         return loss
@@ -150,7 +162,9 @@ class WeightedL1Loss(nn.Module):
             self.code_weights = torch.from_numpy(self.code_weights).cuda()
 
     @torch.cuda.amp.custom_fwd(cast_inputs=torch.float16)
-    def forward(self, input: torch.Tensor, target: torch.Tensor, weights: torch.Tensor = None):
+    def forward(
+        self, input: torch.Tensor, target: torch.Tensor, weights: torch.Tensor = None
+    ):
         """
         Args:
             input: (B, #anchors, #codes) float tensor.
@@ -174,7 +188,9 @@ class WeightedL1Loss(nn.Module):
 
         # anchor-wise weighting
         if weights is not None:
-            assert weights.shape[0] == loss.shape[0] and weights.shape[1] == loss.shape[1]
+            assert (
+                weights.shape[0] == loss.shape[0] and weights.shape[1] == loss.shape[1]
+            )
             loss = loss * weights.unsqueeze(-1)
 
         return loss
@@ -185,6 +201,7 @@ class WeightedCrossEntropyLoss(nn.Module):
     Transform input to fit the fomation of PyTorch offical cross entropy loss
     with anchor-wise weighting.
     """
+
     def __init__(self):
         super(WeightedCrossEntropyLoss, self).__init__()
 
@@ -204,7 +221,7 @@ class WeightedCrossEntropyLoss(nn.Module):
         """
         input = input.permute(0, 2, 1)
         target = target.argmax(dim=-1)
-        loss = F.cross_entropy(input, target, reduction='none') * weights
+        loss = F.cross_entropy(input, target, reduction="none") * weights
         return loss
 
 
@@ -226,8 +243,10 @@ def get_corner_loss_lidar(pred_bbox3d: torch.Tensor, gt_bbox3d: torch.Tensor):
     gt_bbox3d_flip[:, 6] += np.pi
     gt_box_corners_flip = box_utils.boxes_to_corners_3d(gt_bbox3d_flip)
     # (N, 8)
-    corner_dist = torch.min(torch.norm(pred_box_corners - gt_box_corners, dim=2),
-                            torch.norm(pred_box_corners - gt_box_corners_flip, dim=2))
+    corner_dist = torch.min(
+        torch.norm(pred_box_corners - gt_box_corners, dim=2),
+        torch.norm(pred_box_corners - gt_box_corners_flip, dim=2),
+    )
     # (N, 8)
     corner_loss = WeightedSmoothL1Loss.smooth_l1_loss(corner_dist, beta=1.0)
 
@@ -336,6 +355,7 @@ class FocalLossCenterNet(nn.Module):
     """
     Refer to https://github.com/tianweiy/CenterPoint
     """
+
     def __init__(self):
         super(FocalLossCenterNet, self).__init__()
         self.neg_loss = neg_loss_cornernet
@@ -356,7 +376,7 @@ def _reg_loss(regr, gt_regr, mask):
     """
     num = mask.float().sum()
     mask = mask.unsqueeze(2).expand_as(gt_regr).float()
-    isnotnan = (~ torch.isnan(gt_regr)).float()
+    isnotnan = (~torch.isnan(gt_regr)).float()
     mask *= isnotnan
     regr = regr * mask
     gt_regr = gt_regr * mask
@@ -377,8 +397,8 @@ def _reg_loss(regr, gt_regr, mask):
 
 
 def _gather_feat(feat, ind, mask=None):
-    dim  = feat.size(2)
-    ind  = ind.unsqueeze(2).expand(ind.size(0), ind.size(1), dim)
+    dim = feat.size(2)
+    ind = ind.unsqueeze(2).expand(ind.size(0), ind.size(1), dim)
     feat = feat.gather(1, ind)
     if mask is not None:
         mask = mask.unsqueeze(2).expand_as(feat)
@@ -423,6 +443,7 @@ class FocalLossSparse(nn.Module):
     """
     Refer to https://github.com/tianweiy/CenterPoint
     """
+
     def __init__(self):
         super(FocalLossSparse, self).__init__()
         self.neg_loss = neg_loss_sparse
@@ -452,7 +473,7 @@ class RegLossSparse(nn.Module):
         pred = []
         batch_size = mask.shape[0]
         for bs_idx in range(batch_size):
-            batch_inds = batch_index==bs_idx
+            batch_inds = batch_index == bs_idx
             pred.append(output[batch_inds][ind[bs_idx]])
         pred = torch.stack(pred)
 
@@ -461,13 +482,13 @@ class RegLossSparse(nn.Module):
 
 
 class IouLossSparse(nn.Module):
-    '''IouLoss loss for an output tensor
+    """IouLoss loss for an output tensor
     Arguments:
         output (batch x dim x h x w)
         mask (batch x max_objects)
         ind (batch x max_objects)
         target (batch x max_objects x dim)
-    '''
+    """
 
     def __init__(self):
         super(IouLossSparse, self).__init__()
@@ -480,31 +501,35 @@ class IouLossSparse(nn.Module):
 
         loss = 0
         for bs_idx in range(batch_size):
-            batch_inds = batch_index==bs_idx
+            batch_inds = batch_index == bs_idx
             pred = iou_pred[batch_inds][ind[bs_idx]][mask[bs_idx]]
             pred_box = box_pred[batch_inds][ind[bs_idx]][mask[bs_idx]]
             target = iou3d_nms_utils.boxes_aligned_iou3d_gpu(pred_box, box_gt[bs_idx])
             target = 2 * target - 1
-            loss += F.l1_loss(pred, target, reduction='sum')
+            loss += F.l1_loss(pred, target, reduction="sum")
 
         loss = loss / (mask.sum() + 1e-4)
         return loss
 
+
 class IouRegLossSparse(nn.Module):
-    '''Distance IoU loss for output boxes
-        Arguments:
-            output (batch x dim x h x w)
-            mask (batch x max_objects)
-            ind (batch x max_objects)
-            target (batch x max_objects x dim)
-    '''
+    """Distance IoU loss for output boxes
+    Arguments:
+        output (batch x dim x h x w)
+        mask (batch x max_objects)
+        ind (batch x max_objects)
+        target (batch x max_objects x dim)
+    """
 
     def __init__(self, type="DIoU"):
         super(IouRegLossSparse, self).__init__()
 
     def center_to_corner2d(self, center, dim):
-        corners_norm = torch.tensor([[-0.5, -0.5], [-0.5, 0.5], [0.5, 0.5], [0.5, -0.5]],
-                                    dtype=torch.float32, device=dim.device)
+        corners_norm = torch.tensor(
+            [[-0.5, -0.5], [-0.5, 0.5], [0.5, 0.5], [0.5, -0.5]],
+            dtype=torch.float32,
+            device=dim.device,
+        )
         corners = dim.view([-1, 1, 2]) * corners_norm.view([1, 4, 2])
         corners = corners + center.view(-1, 1, 2)
         return corners
@@ -524,8 +549,13 @@ class IouRegLossSparse(nn.Module):
         volume_pred_boxes = pred_boxes[:, 3] * pred_boxes[:, 4] * pred_boxes[:, 5]
         volume_gt_boxes = gt_boxes[:, 3] * gt_boxes[:, 4] * gt_boxes[:, 5]
 
-        inter_h = torch.minimum(pred_boxes[:, 2] + 0.5 * pred_boxes[:, 5], gt_boxes[:, 2] + 0.5 * gt_boxes[:, 5]) - \
-                torch.maximum(pred_boxes[:, 2] - 0.5 * pred_boxes[:, 5], gt_boxes[:, 2] - 0.5 * gt_boxes[:, 5])
+        inter_h = torch.minimum(
+            pred_boxes[:, 2] + 0.5 * pred_boxes[:, 5],
+            gt_boxes[:, 2] + 0.5 * gt_boxes[:, 5],
+        ) - torch.maximum(
+            pred_boxes[:, 2] - 0.5 * pred_boxes[:, 5],
+            gt_boxes[:, 2] - 0.5 * gt_boxes[:, 5],
+        )
         inter_h = torch.clamp(inter_h, min=0)
 
         inter = torch.clamp((inter_max_xy - inter_min_xy), min=0)
@@ -535,11 +565,16 @@ class IouRegLossSparse(nn.Module):
         # boxes_iou3d_gpu(pred_boxes, gt_boxes)
         inter_diag = torch.pow(gt_boxes[:, 0:3] - pred_boxes[:, 0:3], 2).sum(-1)
 
-        outer_h = torch.maximum(gt_boxes[:, 2] + 0.5 * gt_boxes[:, 5], pred_boxes[:, 2] + 0.5 * pred_boxes[:, 5]) - \
-                torch.minimum(gt_boxes[:, 2] - 0.5 * gt_boxes[:, 5], pred_boxes[:, 2] - 0.5 * pred_boxes[:, 5])
+        outer_h = torch.maximum(
+            gt_boxes[:, 2] + 0.5 * gt_boxes[:, 5],
+            pred_boxes[:, 2] + 0.5 * pred_boxes[:, 5],
+        ) - torch.minimum(
+            gt_boxes[:, 2] - 0.5 * gt_boxes[:, 5],
+            pred_boxes[:, 2] - 0.5 * pred_boxes[:, 5],
+        )
         outer_h = torch.clamp(outer_h, min=0)
         outer = torch.clamp((out_max_xy - out_min_xy), min=0)
-        outer_diag = outer[:, 0] ** 2 + outer[:, 1] ** 2 + outer_h ** 2
+        outer_diag = outer[:, 0] ** 2 + outer[:, 1] ** 2 + outer_h**2
 
         dious = volume_inter / volume_union - inter_diag / outer_diag
         dious = torch.clamp(dious, min=-1.0, max=1.0)
@@ -554,24 +589,80 @@ class IouRegLossSparse(nn.Module):
 
         loss = 0
         for bs_idx in range(batch_size):
-            batch_inds = batch_index==bs_idx
+            batch_inds = batch_index == bs_idx
             pred_box = box_pred[batch_inds][ind[bs_idx]]
             iou = self.bbox3d_iou_func(pred_box[mask[bs_idx]], box_gt[bs_idx])
-            loss += (1. - iou).sum()
+            loss += (1.0 - iou).sum()
 
-        loss =  loss / (mask.sum() + 1e-4)
+        loss = loss / (mask.sum() + 1e-4)
         return loss
+
 
 class L1Loss(nn.Module):
     def __init__(self):
         super(L1Loss, self).__init__()
-       
+
     def forward(self, pred, target):
         if target.numel() == 0:
             return pred.sum() * 0
         assert pred.size() == target.size()
         loss = torch.abs(pred - target)
         return loss
+
+
+def calculate_iou_loss_transfusionhead(
+    iou_preds, batch_box_preds, gt_boxes, weights, num_pos
+):
+    """
+    Args:
+        iou_preds: (batch x 1 x proposal)
+        batch_box_preds: (batch x proposal x 7)
+        # gt_boxes: (batch x N, 7 or 9)
+        gt_boxes: (batch x proposal x 7)
+        weights:
+        num_pos: int
+    Returns:
+    """
+    # iou_target = iou3d_nms_utils.paired_boxes_iou3d_gpu(batch_box_preds.reshape(-1, 7), gt_boxes.reshape(-1, 7))
+    # # iou_target = iou3d_nms_utils.boxes_iou3d_gpu(selected_box_preds[:, 0:7].clone(), gt_boxes[mask][:, 0:7].clone()).diag()
+    # iou_target = iou_target * 2 - 1  # [0, 1] ==> [-1, 1]
+
+    # # print(selected_iou_preds.view(-1), iou_target)
+    # valid_index = torch.nonzero(weights[:, :, 0].view(-1)).squeeze(-1)
+    # loss = F.l1_loss(iou_preds.view(-1)[valid_index], iou_target[valid_index], reduction='sum')
+    # # loss = loss / torch.clamp(torch.FloatTensor([iou_preds.shape[0] * iou_preds.shape[2]])[0].to(iou_target.device), min=1e-4)
+    # loss = loss / max(num_pos, 1)
+    # return loss
+
+    iou_target = iou3d_nms_utils.boxes_aligned_iou3d_gpu(
+        batch_box_preds.reshape(-1, 7), gt_boxes.reshape(-1, 7)
+    ).view(-1)
+    # valid_index = torch.nonzero(iou_target).squeeze(-1)
+    valid_index = torch.nonzero(iou_target * weights[:, :, 0].view(-1)).squeeze(-1)
+    num_pos = valid_index.shape[0]
+
+    iou_target = iou_target * 2 - 1  # [0, 1] ==> [-1, 1]
+
+    loss = F.l1_loss(
+        iou_preds.view(-1)[valid_index], iou_target[valid_index], reduction="sum"
+    )
+    loss = loss / max(num_pos, 1)
+    return loss
+
+
+def calculate_iou_reg_loss_transfusionhead(batch_box_preds, gt_boxes, weights, num_pos):
+
+    valid_index = torch.nonzero(weights[:, :, 0].view(-1)).squeeze(-1)
+    iou = box_utils.bbox3d_overlaps_diou(
+        batch_box_preds.reshape(-1, 7)[valid_index],
+        gt_boxes.reshape(-1, 7)[valid_index],
+    )
+    revalid_index = torch.nonzero(iou > 0).squeeze(-1)
+    iou = iou[revalid_index]
+    num_pos = revalid_index.shape[0]
+    loss = (1.0 - iou).sum() / max(num_pos, 1)
+
+    return loss
 
 
 class GaussianFocalLoss(nn.Module):
@@ -591,9 +682,7 @@ class GaussianFocalLoss(nn.Module):
         loss_weight (float): Loss weight of current loss.
     """
 
-    def __init__(self,
-                 alpha=2.0,
-                 gamma=4.0):
+    def __init__(self, alpha=2.0, gamma=4.0):
         super(GaussianFocalLoss, self).__init__()
         self.alpha = alpha
         self.gamma = gamma
@@ -625,12 +714,14 @@ def calculate_iou_loss_centerhead(iou_preds, batch_box_preds, mask, ind, gt_boxe
     selected_iou_preds = _transpose_and_gather_feat(iou_preds, ind)[mask]
 
     selected_box_preds = _transpose_and_gather_feat(batch_box_preds, ind)[mask]
-    iou_target = iou3d_nms_utils.paired_boxes_iou3d_gpu(selected_box_preds[:, 0:7], gt_boxes[mask][:, 0:7])
+    iou_target = iou3d_nms_utils.paired_boxes_iou3d_gpu(
+        selected_box_preds[:, 0:7], gt_boxes[mask][:, 0:7]
+    )
     # iou_target = iou3d_nms_utils.boxes_iou3d_gpu(selected_box_preds[:, 0:7].clone(), gt_boxes[mask][:, 0:7].clone()).diag()
     iou_target = iou_target * 2 - 1  # [0, 1] ==> [-1, 1]
 
     # print(selected_iou_preds.view(-1), iou_target)
-    loss = F.l1_loss(selected_iou_preds.view(-1), iou_target, reduction='sum')
+    loss = F.l1_loss(selected_iou_preds.view(-1), iou_target, reduction="sum")
     loss = loss / torch.clamp(mask.sum(), min=1e-4)
     return loss
 
@@ -643,7 +734,9 @@ def calculate_iou_reg_loss_centerhead(batch_box_preds, mask, ind, gt_boxes):
 
     selected_box_preds = _transpose_and_gather_feat(batch_box_preds, ind)
 
-    iou = box_utils.bbox3d_overlaps_diou(selected_box_preds[mask][:, 0:7], gt_boxes[mask][:, 0:7])
+    iou = box_utils.bbox3d_overlaps_diou(
+        selected_box_preds[mask][:, 0:7], gt_boxes[mask][:, 0:7]
+    )
 
     loss = (1.0 - iou).sum() / torch.clamp(mask.sum(), min=1e-4)
     return loss
