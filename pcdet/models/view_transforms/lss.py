@@ -18,6 +18,8 @@ class LSSTransform(nn.Module):
     def __init__(self, model_cfg) -> None:
         super().__init__()
         self.model_cfg = model_cfg
+        self.camera_num = self.model_cfg.get("CAMERA_NUM", 6)
+
         in_channel = self.model_cfg.IN_CHANNEL
         out_channel = self.model_cfg.OUT_CHANNEL
         self.image_size = self.model_cfg.IMAGE_SIZE
@@ -225,7 +227,7 @@ class LSSTransform(nn.Module):
             x = x[0]
 
         BN, C, H, W = x.size()
-        img = x.view(int(BN / 6), 6, C, H, W)
+        img = x.view(int(BN / self.camera_num), self.camera_num, C, H, W)
         x = self.get_cam_feats(img)
         if self.accelerate and self.cache is not None:
             x = self.acc_bev_pool(x)

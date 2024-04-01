@@ -556,6 +556,7 @@ class NuScenesDataset(DatasetTemplate):
         self.camera_config = self.dataset_cfg.get("CAMERA_CONFIG", None)
         if self.camera_config is not None:
             self.use_camera = self.camera_config.get("USE_CAMERA", True)
+            self.few_camera = self.camera_config.get("FEW_CAMERA", False)
             self.camera_image_config = self.camera_config.IMAGE
         else:
             self.use_camera = False
@@ -716,7 +717,10 @@ class NuScenesDataset(DatasetTemplate):
         input_dict["camera_intrinsics"] = []
         input_dict["camera2lidar"] = []
 
-        for _, camera_info in info["cams"].items():
+        for idx, (_, camera_info) in enumerate(info["cams"].items()):
+            if self.few_camera and idx % 2 == 0:
+                continue
+
             input_dict["image_paths"].append(camera_info["data_path"])
 
             # lidar to camera transform

@@ -10,6 +10,7 @@ DATA_CONFIG:
     }
     CAMERA_CONFIG:
       USE_CAMERA: True
+      FEW_CAMERA: True
       IMAGE:
           FINAL_DIM: [256,704]
           RESIZE_LIM_TRAIN: [0.38, 0.55]
@@ -88,10 +89,8 @@ DATA_CONFIG:
           std: [0.229, 0.224, 0.225]
 MODEL:
     NAME: UniTR
-
     MM_BACKBONE:
       NAME: UniTR
-      ACCELERATE: True  # option of cache unitr backbone
       PATCH_EMBED:
         in_channels: 3
         image_size: [256, 704]
@@ -170,7 +169,7 @@ MODEL:
 
     VTRANSFORM:
       NAME: LSSTransform
-      ACCELERATE: True  # option of cache LSS
+      CAMERA_NUM: 3
       IMAGE_SIZE: [256,704]
       IN_CHANNEL: 256
       OUT_CHANNEL: 80
