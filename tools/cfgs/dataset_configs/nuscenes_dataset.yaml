@@ -1,8 +1,8 @@
 DATASET: 'NuScenesDataset'
 DATA_PATH: '/mnt/nas3/Data/nuScenes/'
 
-# VERSION: 'v1.0-trainval'
-VERSION: 'v1.0-mini'
+VERSION: 'v1.0-trainval'
+# VERSION: 'v1.0-mini'
 
 MAX_SWEEPS: 10
 PRED_VELOCITY: True
