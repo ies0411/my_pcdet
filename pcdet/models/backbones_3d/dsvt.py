@@ -709,16 +709,7 @@ class DSVTInputLayer(nn.Module):
         # get unique set indexs
         contiguous_win_inds = torch.unique(batch_win_inds, return_inverse=True)[1]
         voxelnum_per_win = torch.bincount(contiguous_win_inds)
-        ######
-        # max_index = torch.max(contiguous_win_inds)
 
-        # # Initialize voxelnum_per_win tensor with zeros
-        # voxelnum_per_win = torch.zeros(max_index + 1)
-
-        # # Count the occurrences of each index in contiguous_win_inds
-        # for idx in contiguous_win_inds:
-        #     voxelnum_per_win[idx] += 1
-        ######
         win_num = voxelnum_per_win.shape[0]
         setnum_per_win_float = voxelnum_per_win / voxel_num_set
         setnum_per_win = torch.ceil(setnum_per_win_float).long()
